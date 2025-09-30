@@ -29,7 +29,7 @@ public class MapaPublicaciones {
 	public void cargarFicheroAutoresPorPublicacion(String nom) {
 		try {
 			Scanner entrada = new Scanner(new FileReader(nom));
-			String linea = null;
+			String linea;
 			while (entrada.hasNextLine()) {
 				linea = entrada.nextLine();
 				String[] datos = linea.split(" # ");
@@ -45,18 +45,18 @@ public class MapaPublicaciones {
 			e.printStackTrace();
 		}
 	}
-	
+	//prueba 
 	public void guardarFicheroAutoresPorPublicacion(String nom) {
 		try {
-			PrintWriter salida = new PrintWriter(new File(nom)); //Abrimos el fichero para escritura
+			PrintWriter writer = new PrintWriter(new File(nom)); //Abrimos el fichero para escritura
 			//Recorremos el mapa que relaciona los autores con las publicaciones
 			for(String idP: mapaAutores.keySet()) { //Recorremos las claves (id de publicación) del mapa de autores
 				for(String idA: mapaAutores.get(idP)) { //Recorremos los identificadores de los autores asociados a idP
-					salida.println(idP+" # "+idA);
+					writer.println(idP+" # "+idA);
 				}
 			}
-			salida.flush();
-			salida.close();
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -87,15 +87,15 @@ public class MapaPublicaciones {
 	
 	public void guardarFicheroPublicacionesCitadas(String nom) {
 		try {
-			PrintWriter salida = new PrintWriter(new File(nom));
+			PrintWriter writer = new PrintWriter(new File(nom));
 			//Recorremos las claves del mapa de citas
 			for(String idP: mapaCitas.keySet()) {
 				for(String idC: mapaCitas.get(idP)) {
-					salida.println(idP+" # "+idC);
+					writer.println(idP+" # "+idC);
 				}
 			}
-			salida.flush();
-			salida.close();
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -122,14 +122,14 @@ public class MapaPublicaciones {
 	
 	public void guardarPublicacionesEnFichero(String nom) {
 		try {
-			PrintWriter salida = new PrintWriter(new File(nom));
+			PrintWriter writer = new PrintWriter(new File(nom));
 			//Recorremos los valores del mapa
 			//En este caso los valores son todas las publicaciones, que es lo que queremos escribir en el fichero
 			for(Publicacion p: mapaPublicaciones.values()) {
-				salida.println(p.getIdentificador()+" # "+p.getTitulo());
+				writer.println(p.getIdentificador()+" # "+p.getTitulo());
 			}
-			salida.flush();
-			salida.close();
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -35,12 +35,12 @@ public class MapaAutores {
 	
 	public void guardarFicheroAutores(String nom) {
 		try {
-			PrintWriter salida = new PrintWriter(new File(nom));
+			PrintWriter writer = new PrintWriter(new File(nom));
 			for(Autor a: autMapa.values()) {
-				salida.println(a.getIdentificador()+" # "+a.getNombre());
+				writer.println(a.getIdentificador()+" # "+a.getNombre());
 			}
-			salida.flush();
-			salida.close();
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

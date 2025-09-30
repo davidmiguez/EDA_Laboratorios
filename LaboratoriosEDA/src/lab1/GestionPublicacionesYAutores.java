@@ -9,10 +9,10 @@ public class GestionPublicacionesYAutores {
 	public GestionPublicacionesYAutores() {
 		mapaP = new MapaPublicaciones();
 		mapaA = new MapaAutores();
-		mapaP.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt");
-		mapaP.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt");
-		mapaP.cargarPublicacionesDeFichero("Datuak/Datuak/publications-titles-all.txt");
-		mapaA.cargarFicheroAutores("Datuak/Datuak/authors-name-all.txt");
+		mapaP.cargarFicheroAutoresPorPublicacion("C:\\Users\\David Miguez\\Downloads\\Datuak\\Datuak\\publications-authors-all-final.txt");
+		mapaP.cargarFicheroPublicacionesCitadas("C:\\Users\\David Miguez\\Downloads\\Datuak\\Datuak\\publications-citedPubs-all.txt");
+		mapaP.cargarPublicacionesDeFichero("C:\\Users\\David Miguez\\Downloads\\Datuak\\Datuak\\publications-titles-all.txt");
+		mapaA.cargarFicheroAutores("C:\\Users\\David Miguez\\Downloads\\Datuak\\Datuak\\authors-name-all.txt");
 	}
 	
 	public List<Autor> obtenerAutoresDeLaPublicacion(String idP){
