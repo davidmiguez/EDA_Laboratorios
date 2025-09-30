@@ -202,25 +202,84 @@ public class MapaPublicaciones {
 		return la;
 	}
 	
-	//Borrar una publicaci贸n
 	public void borrarPublicacion(String idP) {
 		mapaPublicaciones.remove(idP);
 	}
 	
-//	Obtener una lista de publicaciones ordenada alfab茅ticamente (esta operaci贸n no debe
-//	modificar la lista de publicaciones, sino que debe devolver una nueva lista ordenada, de tipo
-//	ArrayList o LinkedList). Se debe implementar un algoritmo de ordenaci贸n, es decir, no se
-//	puede llamar a una funci贸n est谩ndar de ordenaci贸n ya implementada.
+	
+	//mergeSort:
+	private void merge(List<Publicacion> pLista, int pInicio, int pMitad, int pFin) {
+		int t1 = pMitad - pInicio+1; //tamano izq
+		int t2 = pFin - pMitad; //tamano derecha
+		//arrays temporales para no sobreescribir y que se rompa
+		Publicacion[] izq = new Publicacion[t1]; //copia los elementos desde inicio hasta mitad
+		Publicacion[] der = new Publicacion[t2]; // desde mitad+1 hasta fin
+		//anado los datos ordenados a los arrays temporales
+		for(int i=0; i<t1 ; i++) {
+			izq[i] = pLista.get(pInicio+i);
+		}
+		for(int j=0; j<t2 ; j++) {
+			der[j] = pLista.get(pMitad+1+j);
+		}
+		
+		int i=0;
+		int j=0;
+		int k=pInicio;
+		while( i < t1 && j < t2) {
+			String idIzq = izq[i].getIdentificador();
+	        String idDer = der[j].getIdentificador();
+	        if (idIzq.compareTo(idDer) <= 0) {
+	            pLista.set(k, izq[i]);
+	            i++;
+	        } else {
+	            pLista.set(k, der[j]);
+	            j++;
+	        }
+	        k++;
+	    }
+	    //una de las listas se va a terminar antes que la otra, copiamos el sobrante
+	    while (i < t1) {
+	        pLista.set(k, izq[i]);
+	        i++;
+	        k++;
+	    }
+	    while (j < t2) {
+	        pLista.set(k, der[j]);
+	        j++;
+	        k++;
+		}
+	}
+	
+	private void mergeSort(List<Publicacion> pLista, int pInicio, int pFin) {
+		int mitad;
+		// el caso base seria pInicio>=pFin, si es el caso, no hace nada
+		if(pInicio < pFin) {
+			mitad = pInicio + (pFin - pInicio) / 2; //calcula la mitad
+			mergeSort(pLista, pInicio, mitad); //primera mitad
+			mergeSort(pLista, mitad+1, pFin); //segunda mitad
+			merge(pLista, pInicio, mitad, pFin); //juntar las dos
+		}
+	}
+	
+
 	public List<Publicacion> obtenerPublicacionesOrdenadas(){
-		List<Publicacion> publicacionesOrdenadas = new LinkedList<>();
+		List<Publicacion> publicacionesOrdenadas = new ArrayList<>(mapaPublicaciones.values());
+		mergeSort(publicacionesOrdenadas, 0, publicacionesOrdenadas.size()-1); //llamada a mergeSort con inicio=0 y fin=size-1
+		return publicacionesOrdenadas;
+	}
+
+/*
+	public List<Publicacion> obtenerPublicacionesOrdenadas(){
+		List<Publicacion> publicacionesOrdenadas = new LinkedList<>(); // lista vacia para el resultado final ordenado
 		
 		//Recorro los valores del mapa de Publicaciones
 		for(Publicacion p: mapaPublicaciones.values()) {
-			//Cada publicaci贸n la tenemos que guardar de forma ordenada en publicacionesOrdenadas
-			if(publicacionesOrdenadas.size()==0) {
+			if(publicacionesOrdenadas.size()==0) { //si esta vacia se a馻de la primera
 				publicacionesOrdenadas.add(p);
 			}else {
-				int pi = 0, pf = publicacionesOrdenadas.size()-1, mitad=0;
+
+				int pi = 0; 
+				int pf = publicacionesOrdenadas.size()-1, mitad=0;
 				boolean enc = false;
 				while(pi<=pf && !enc) {
 					mitad = (pi+pf)/2;
@@ -245,6 +304,7 @@ public class MapaPublicaciones {
 		}
 		return publicacionesOrdenadas;
 	}
+*/
 	// cadena1.compareTo(cadena2)
 	// Devuelve <0 si cadena1 < cadena2
 	// Devuelve >0 si cadena1 > cadena2
