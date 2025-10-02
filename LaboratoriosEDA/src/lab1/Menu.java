@@ -41,7 +41,8 @@ public class Menu
             System.out.println("9. Borrar una publicación");
             System.out.println("10. Borrar un autor");            
             System.out.println("11. Guardar todo en ficheros actualizados");
-            System.out.println("12. Obtener lista de publicaciones ordenadas (por título)");         
+            System.out.println("12. Obtener lista de publicaciones ordenadas (por título)");  
+            System.out.println("13. Cerrar programa.");  
             System.out.print("---> ");
             
             opcion=sn.nextInt();
@@ -80,6 +81,10 @@ public class Menu
                 case 9:
                     exit=true;
                     break;*/
+                case 13:
+                	System.out.println("Finalizando programa...\n");
+                	salir=true;
+                	break;
                 default:
                     System.out.println("Solo numeros del 0 al 12\n");
             }
