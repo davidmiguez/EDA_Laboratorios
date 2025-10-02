@@ -9,10 +9,6 @@ public class GestionPublicacionesYAutores {
 	public GestionPublicacionesYAutores() { //O(n)-> Coste lineal
 		mapaP = new MapaPublicaciones(); //O(1)
 		mapaA = new MapaAutores(); //O(1)
-		mapaP.cargarFicheroAutoresPorPublicacion("datos/publications-authors-all-final.txt"); //O(n)
-		mapaP.cargarFicheroPublicacionesCitadas("datos/publications-citedPubs-reducido.txt"); //O(n)
-		mapaP.cargarPublicacionesDeFichero("datos/publications-titles-all.txt"); //O(n)
-		mapaA.cargarFicheroAutores("datos/authors-name-all.txt"); //O(n)
 	}
 	
 	public List<Autor> obtenerAutoresDeLaPublicacion(String idP){ //O(n)-> Coste lineal
@@ -22,8 +18,67 @@ public class GestionPublicacionesYAutores {
 			Autor a = mapaA.obtenerAutor(idA); //O(1)
 			lAut.add(a); //O(1)
 		}
-	
 		return lAut;
     } 
-}
+	
+	
+	
+	public void cargarDatos() {
+        mapaA.cargarFicheroAutores("datos/authors-name-all.txt");
+        mapaP.cargarPublicacionesDeFichero("datos/publications-titles-all.txt");
+        mapaP.cargarFicheroAutoresPorPublicacion("datos/publications-authors-all-final.txt");
+        mapaP.cargarFicheroPublicacionesCitadas("datos/publications-citedPubs-reducido.txt");
+    }
+	
+	public Publicacion buscarPublicacion(String id) {
+        return mapaP.buscarPublicacion(id);
+    }
 
+    public void insertarNuevaPublicacion(String id, String titulo) {
+        mapaP.insertarNuevaPublicacion(id, titulo);
+    }
+
+    public void aniadirCitaAPublicacion(String idPub, String idCitada) {
+        mapaP.aniadirCitaAPublicacion(idPub, idCitada);
+    }
+
+    public void aniadirAutorAPublicacion(String idPub, String idAutor) {
+        mapaP.aniadirAutorAPublicacion(idPub, idAutor);
+    }
+
+    public void insertarNuevoAutor(String id, String nombre) {
+        mapaA.aniadirNuevoAutor(id, nombre);
+    }
+
+    public List<String> obtenerAutoresPublicacion(String idP) {
+        return mapaP.obtenerAutoresPublicacion(idP);
+    }
+	
+    public List<String> obtenerListaPublicacionesCitadasV2(String idP) {
+        return mapaP.obtenerListaPublicacionesCitadasV2(idP);
+    }
+
+    public List<Publicacion> obtenerPublicacionesAutor(String idAutor) {
+        return mapaP.obtenerPublicacionesAutor(idAutor);
+    }
+
+    public List<Publicacion> obtenerPublicacionesOrdenadas() {
+        return mapaP.obtenerPublicacionesOrdenadas();
+    }
+
+    public void borrarPublicacion(String id) {
+        mapaP.borrarPublicacion(id);
+    }
+
+    public void borrarAutor(String id) {
+        mapaA.borrarAutor(id);
+    }
+
+    public void guardarDatos(String carpeta) {
+        mapaP.guardarPublicacionesEnFichero("salida-publicaciones.txt");
+        mapaP.guardarFicheroAutoresPorPublicacion("salida-autores-pub.txt");
+        mapaP.guardarFicheroPublicacionesCitadas("salida-citas.txt");
+        mapaA.guardarFicheroAutores("salida-autores.txt");
+    }
+	
+}

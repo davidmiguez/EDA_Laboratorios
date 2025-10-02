@@ -13,7 +13,6 @@ public class MapaPublicaciones {
 	private Map<String, Publicacion> mapaPublicaciones; 
 	private Map<String, ArrayList<String>> mapaCitas; 
 	private Map<String, ArrayList<String>> mapaAutores; 
-														
 
 	public MapaPublicaciones() { //O(1) -> Coste constante
 		mapaPublicaciones = new HashMap<>();
@@ -21,31 +20,39 @@ public class MapaPublicaciones {
 		mapaAutores = new HashMap<>();
 	}
 
-	public void cargarFicheroAutoresPorPublicacion(String nom) { //O(n) -> Coste lineal
-		try {
-			Scanner entrada = new Scanner(new FileReader(nom)); //O(1)
-			String linea; //O(1)
-			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el número de líneas que tenga el fichero
-				linea = entrada.nextLine(); //O(1)
-				String[] datos = linea.split(" # "); //O(1)
-				String idP = datos[0]; //O(1)
-				String idA = datos[1]; //O(1)
-				if (!mapaAutores.containsKey(idP)) { //O(1)xO(1) -> O(1)
-					mapaAutores.put(idP, new ArrayList<>()); //O(1)
-				}
-				mapaAutores.get(idP).add(idA); //O(1)
-			}
-			entrada.close(); //O(1)
-		} catch (IOException e) { //O(1)
-			e.printStackTrace();
-		}
+	public void cargarFicheroAutoresPorPublicacion(String nom) { // O(n) â†’ Coste lineal
+	    try (Scanner entrada = new Scanner(new FileReader(nom))) { // O(1)
+	        while (entrada.hasNextLine()) { // n Ã— O(1) â†’ O(n)
+	            String linea = entrada.nextLine().trim(); // O(1)
+	
+	            if (linea.isEmpty()) { // O(1)
+	                continue; // O(1)
+	            }
+	
+	            String[] datos = linea.split(" # "); // O(1) asumiendo longitud limitada de linea
+	            if (datos.length != 2) { // O(1)
+	                System.err.println("Linea con formato incorrecto: " + linea); // O(1)
+	                continue; // O(1)
+	            }
+	
+	            String idP = datos[0].trim(); // O(1)
+	            String idA = datos[1].trim(); // O(1)
+	
+	            if (!mapaAutores.containsKey(idP)) { // O(1)
+	                mapaAutores.put(idP, new ArrayList<>()); // O(1)
+	            }
+	            mapaAutores.get(idP).add(idA); // O(1)
+	        }
+	    } catch (IOException e) { // O(1)
+	        e.printStackTrace();
+	    }
 	}
 	
 	public void guardarFicheroAutoresPorPublicacion(String nom) { //O(n) -> Coste lineal
 		try {
 			PrintWriter writer = new PrintWriter(new File(nom));  //O(1)
-			for(String idP: mapaAutores.keySet()) { //n x O( m) -> O(nxm) -> O(n) donde n es el número de claves del mapaAutores
-				for(String idA: mapaAutores.get(idP)) { //m x O(1) -> O(m) donde m es el número de elementos 
+			for(String idP: mapaAutores.keySet()) { //n x O( m) -> O(nxm) -> O(n) donde n es el nï¿½mero de claves del mapaAutores
+				for(String idA: mapaAutores.get(idP)) { //m x O(1) -> O(m) donde m es el nï¿½mero de elementos 
 					writer.println(idP+" # "+idA);  //O(1)
 				}
 			}
@@ -60,7 +67,7 @@ public class MapaPublicaciones {
 		try {
 			Scanner entrada = new Scanner(new FileReader(nom));//O(1)
 			String linea;//O(1)
-			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el número de líneas que tenga el fichero
+			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el nï¿½mero de lï¿½neas que tenga el fichero
 				linea = entrada.nextLine();//O(1)
 				String datos[] = linea.split(" # "); //O(1)
 				if (!mapaCitas.containsKey(datos[0])) {//O(1)
@@ -77,8 +84,8 @@ public class MapaPublicaciones {
 	public void guardarFicheroPublicacionesCitadas(String nom) { //O(n) -> Coste lineal
 		try {
 			PrintWriter writer = new PrintWriter(new File(nom));//O(1)
-			for(String idP: mapaCitas.keySet()) {  //n x O( m) -> O(nxm) -> O(n) donde n es el número de claves del mapaAutores
-				for(String idC: mapaCitas.get(idP)) { //m x O(1) -> O(m) donde m es el número de elementos 
+			for(String idP: mapaCitas.keySet()) {  //n x O( m) -> O(nxm) -> O(n) donde n es el nï¿½mero de claves del mapaAutores
+				for(String idC: mapaCitas.get(idP)) { //m x O(1) -> O(m) donde m es el nï¿½mero de elementos 
 					writer.println(idP+" # "+idC);//O(1)
 				}
 			}
@@ -93,7 +100,7 @@ public class MapaPublicaciones {
 		try {
 			Scanner entrada = new Scanner(new FileReader(nombre));//O(1)
 			String linea = null;//O(1)
-			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el número de líneas que tenga el fichero
+			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el nï¿½mero de lï¿½neas que tenga el fichero
 				linea = entrada.nextLine(); //O(1)
 				String[] datos = linea.split(" # "); //O(1)
 				Publicacion p = new Publicacion(datos[0], datos[1]);//O(1)
@@ -108,7 +115,7 @@ public class MapaPublicaciones {
 	public void guardarPublicacionesEnFichero(String nom) { //O(n) -> Coste lineal
 		try {
 			PrintWriter writer = new PrintWriter(new File(nom)); //O(1)
-			for(Publicacion p: mapaPublicaciones.values()) { // n x O(1) -> O(n) donde n es el número de valores del mapaPublicaciones
+			for(Publicacion p: mapaPublicaciones.values()) { // n x O(1) -> O(n) donde n es el nï¿½mero de valores del mapaPublicaciones
 				writer.println(p.getIdentificador()+" # "+p.getTitulo()); //O(1)
 			}
 			writer.flush(); //O(1)
@@ -148,7 +155,7 @@ public class MapaPublicaciones {
 	public List<Publicacion> obtenerListaPublicacionesCitadas(String idP) { //O(n) -> Coste lineal
 		List<Publicacion> lp = new ArrayList<>(); //O(1)
 		ArrayList<String> lCitas = mapaCitas.get(idP);  //O(1)
-		for (String id : lCitas) { //n x O(1 ) -> O(n) donde n es número de elementos de lCita
+		for (String id : lCitas) { //n x O(1 ) -> O(n) donde n es nï¿½mero de elementos de lCita
 			Publicacion p = mapaPublicaciones.get(id); //O(1)
 			lp.add(p); //O(1)
 		}
@@ -181,7 +188,7 @@ public class MapaPublicaciones {
 
 	public List<Publicacion> obtenerPublicacionesAutor(String idA){ //O(n) -> Coste lineal
 		List<Publicacion> lp = new ArrayList<>(); //O(1)
-		for(String idP: mapaAutores.keySet()) { //n x O(1) -> O(n) donde n es el número de claves del mapaAutores
+		for(String idP: mapaAutores.keySet()) { //n x O(1) -> O(n) donde n es el nï¿½mero de claves del mapaAutores
 
 			//por cada idP obtener autores
 			List<String> la = mapaAutores.get(idP); //O(1)
