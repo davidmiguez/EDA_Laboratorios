@@ -16,7 +16,7 @@ public class GestionPublicacionesYAutores {
 	}
 	
 	public List<Autor> obtenerAutoresDeLaPublicacion(String idP){
-		List<String> la = mapaP.obtenerAutoresDeLaPublicacion(idP);
+		List<String> la = mapaP.obtenerAutoresPublicacion(idP);
 		List<Autor> lAutores = new ArrayList<>();
 		for(String idA: la) {
 			Autor a = mapaA.obtenerAutor(idA);

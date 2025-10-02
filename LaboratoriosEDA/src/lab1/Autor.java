@@ -11,7 +11,6 @@ public class Autor {
 		this.nombreAutor = nombreAutor;
 	}
 	
-	
 	public String getIdentificador() {
 		return idAutor;
 	}
