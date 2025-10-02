@@ -6,24 +6,25 @@ public class Autor {
 	public Autor() {
 	}
 	
-	public Autor(String idAutor, String nombreAutor) {
-		this.idAutor = idAutor;
-		this.nombreAutor = nombreAutor;
+	public Autor(String idAutor, String nombreAutor) { //max {O(1), O(1)} -> O(1) -> Coste constante
+
+		this.idAutor = idAutor; //O(1)
+		this.nombreAutor = nombreAutor; //O(1)
 	}
 	
-	public String getIdentificador() {
+	public String getIdentificador() { //O(1) -> Coste constante
 		return idAutor;
 	}
 	
-	public String getNombre() {
+	public String getNombre() { //O(1)-> Coste constante
 		return nombreAutor;
 	}
 	
-	public void setIdentificador(String idAutor) {
+	public void setIdentificador(String idAutor) { //O(1)-> Coste constante
 		this.idAutor = idAutor;
 	}
 		
-	public void setNombre(String nombreAutor) {
+	public void setNombre(String nombreAutor) { //O(1)-> Coste constante
 		this.nombreAutor = nombreAutor;
 	}
 	
