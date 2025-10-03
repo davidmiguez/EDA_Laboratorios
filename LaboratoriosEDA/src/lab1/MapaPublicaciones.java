@@ -67,7 +67,7 @@ public class MapaPublicaciones {
 		try {
 			Scanner entrada = new Scanner(new FileReader(nom));//O(1)
 			String linea;//O(1)
-			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el n�mero de l�neas que tenga el fichero
+			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el numero de lineas que tenga el fichero
 				linea = entrada.nextLine();//O(1)
 				String datos[] = linea.split(" # "); //O(1)
 				if (!mapaCitas.containsKey(datos[0])) {//O(1)
@@ -84,8 +84,8 @@ public class MapaPublicaciones {
 	public void guardarFicheroPublicacionesCitadas(String nom) { //O(n) -> Coste lineal
 		try {
 			PrintWriter writer = new PrintWriter(new File(nom));//O(1)
-			for(String idP: mapaCitas.keySet()) {  //n x O( m) -> O(nxm) -> O(n) donde n es el n�mero de claves del mapaAutores
-				for(String idC: mapaCitas.get(idP)) { //m x O(1) -> O(m) donde m es el n�mero de elementos 
+			for(String idP: mapaCitas.keySet()) {  //n x O( m) -> O(nxm) -> O(n) donde n es el numero de claves del mapaAutores
+				for(String idC: mapaCitas.get(idP)) { //m x O(1) -> O(m) donde m es el numero de elementos 
 					writer.println(idP+" # "+idC);//O(1)
 				}
 			}
@@ -100,7 +100,7 @@ public class MapaPublicaciones {
 		try {
 			Scanner entrada = new Scanner(new FileReader(nombre));//O(1)
 			String linea = null;//O(1)
-			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el n�mero de l�neas que tenga el fichero
+			while (entrada.hasNextLine()) { // n x O(1) -> O(n)  donde n es el numero de lineas que tenga el fichero
 				linea = entrada.nextLine(); //O(1)
 				String[] datos = linea.split(" # "); //O(1)
 				Publicacion p = new Publicacion(datos[0], datos[1]);//O(1)
@@ -115,7 +115,7 @@ public class MapaPublicaciones {
 	public void guardarPublicacionesEnFichero(String nom) { //O(n) -> Coste lineal
 		try {
 			PrintWriter writer = new PrintWriter(new File(nom)); //O(1)
-			for(Publicacion p: mapaPublicaciones.values()) { // n x O(1) -> O(n) donde n es el n�mero de valores del mapaPublicaciones
+			for(Publicacion p: mapaPublicaciones.values()) { // n x O(1) -> O(n) donde n es el numero de valores del mapaPublicaciones
 				writer.println(p.getIdentificador()+" # "+p.getTitulo()); //O(1)
 			}
 			writer.flush(); //O(1)
@@ -158,7 +158,7 @@ public class MapaPublicaciones {
 		if (lCitas==null) {
 			return lp;
 		}
-		for (String id : lCitas) { //n x O(1 ) -> O(n) donde n es n�mero de elementos de lCita
+		for (String id : lCitas) { //n x O(1 ) -> O(n) donde n es numero de elementos de lCita
 			Publicacion p = mapaPublicaciones.get(id); //O(1)
 			lp.add(p); //O(1)
 		}
@@ -191,7 +191,7 @@ public class MapaPublicaciones {
 
 	public List<Publicacion> obtenerPublicacionesAutor(String idA){ //O(n) -> Coste lineal
 		List<Publicacion> lp = new ArrayList<>(); //O(1)
-		for(String idP: mapaAutores.keySet()) { //n x O(1) -> O(n) donde n es el n�mero de claves del mapaAutores
+		for(String idP: mapaAutores.keySet()) { //n x O(1) -> O(n) donde n es el numero de claves del mapaAutores
 
 			//por cada idP obtener autores
 			List<String> la = mapaAutores.get(idP); //O(1)
