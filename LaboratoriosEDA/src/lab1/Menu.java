@@ -7,8 +7,6 @@ public class Menu
 {
     private static Menu miMenu=null;
     private GestionPublicacionesYAutores gestion;
-    private MapaPublicaciones mapaP;
-    private MapaAutores mapaA;
     private Menu(){
     	gestion = new GestionPublicacionesYAutores();
     }
@@ -79,9 +77,18 @@ public class Menu
                 case 8:
                     mostrarPublicacionesAutor(sn);
                     break;
-  /*              case 9:
-                    exit=true;
-                    break;*/
+                case 9:
+                    borrarPublicacion(sn);
+                    break;
+                case 10:
+                	borrarAutor(sn);
+                	break;
+                case 11:
+                	guardarFicheros(sn);
+                	break;
+                case 12:
+                	obtenerPublicacionesOrdenadas(sn);
+                	break;
                 case 13:
                 	System.out.println("Finalizando programa...\n");
                 	salir=true;
@@ -211,8 +218,58 @@ public class Menu
 		}
 	}
     
+    private void borrarPublicacion(Scanner sn) {
+    	System.out.print("Introduce el ID de la publicación que deseas borrar: ");
+    	String idP = sn.nextLine();
+    	if(gestion.buscarPublicacion(idP)==null) {
+    		System.out.println("Publicación no encontrada.");
+    	}
+    	else {
+    		gestion.borrarPublicacion(idP);
+    		System.out.println("Publicación borrada correctamente.");
+    	}
+    }
     
+    private void borrarAutor(Scanner sn) {
+    	System.out.print("Introduce el ID del autor que deseas borrar: ");
+    	String idA = sn.nextLine();
+    	if(gestion.obtenerAutor(idA)==null) {
+    		System.out.println("Autor no encontrado.");
+    	}
+    	else {
+    		gestion.borrarAutor(idA);
+    		System.out.println("Autor borrado correctamente.");
+    	}
+    }
     
+    private void guardarFicheros(Scanner sn) {
+    	System.out.println("Introduce el nombre de la carpeta donde quieras guardar los ficheros: ");
+    	String pCarpeta = sn.nextLine();
+    	gestion.guardarDatos(pCarpeta);
+    	System.out.println("Ficheros guardados correctamente.");
+    }
     
+    private void obtenerPublicacionesOrdenadas(Scanner sn) {
+    	System.out.println("Ordenando publicaciones por titulo...");
+    	long inicio = System.currentTimeMillis();
+    	List<Publicacion> lOrdenadas = gestion.obtenerPublicacionesOrdenadas();
+    	long fin = System.currentTimeMillis();
+    	System.out.println("Las publicaciones se han ordenado en un total de " + (fin-inicio) + " ms.");
+    	System.out.println("Total de publicaciones: " + lOrdenadas.size());
+    	//preguntar cuantas quiere ver, para no imprimir todas.
+    	System.out.println("Cuantas publicaciones desea ver? (limite " + lOrdenadas.size() + " ).");
+    	int num = sn.nextInt();
+    	if(lOrdenadas.size()<num) {
+    		System.out.println("Has superado el limite.");
+    	}
+    	else {
+    		System.out.println("Primeras " + num + " publicaciones ordenadas:");
+        	for (int i=0 ; i<num ; i++) {
+        		Publicacion p = lOrdenadas.get(i);
+        		System.out.println( (i+1) + " - " + p.getTitulo() );  // tiene q ser i+1 porque se inicializa en i=0
+        	}
+    	}
+    	
+    }
     
 }

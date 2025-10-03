@@ -77,6 +77,10 @@ public class GestionPublicacionesYAutores {
     public void borrarAutor(String id) {
         mapaA.borrarAutor(id);
     }
+    
+    public Autor obtenerAutor(String pIdA) {
+    	return mapaA.obtenerAutor(pIdA);
+    }
 
     public void guardarDatos(String carpeta) {
         mapaP.guardarPublicacionesEnFichero("salida-publicaciones.txt");

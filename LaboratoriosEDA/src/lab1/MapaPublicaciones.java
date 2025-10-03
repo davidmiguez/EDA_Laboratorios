@@ -181,10 +181,10 @@ public class MapaPublicaciones {
 	}
 
 	//he hecho que el mergeSort sea una clase distinta para que este mas limpio
-	public List<Publicacion> obtenerPublicacionesOrdenadas(){ //O(1) -> Coste constante
-		List<Publicacion> publicacionesOrdenadas = new ArrayList<>(mapaPublicaciones.values()); //O(1) 
+	public List<Publicacion> obtenerPublicacionesOrdenadas(){ //O(n log n) por el mergeSort
+		List<Publicacion> publicacionesOrdenadas = new ArrayList<>(mapaPublicaciones.values()); //O(n) 
 		//copia para no cargarnos la lista original
-		MergeSort.mergeSortPublicaciones(publicacionesOrdenadas);//O(1)
+		MergeSort.mergeSortPublicaciones(publicacionesOrdenadas);
 		//llamada a mergeSort con inicio=0 y fin=size-1
 		return publicacionesOrdenadas;
 	}
