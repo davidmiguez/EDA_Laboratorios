@@ -53,7 +53,11 @@ public class GestionPublicacionesYAutores {
     public List<String> obtenerAutoresPublicacion(String idP) {
         return mapaP.obtenerAutoresPublicacion(idP);
     }
-	
+    
+    public List<Publicacion> obtenerListaPublicacionesCitadas(String idP) {
+        return mapaP.obtenerListaPublicacionesCitadas(idP);
+    }
+    
     public List<String> obtenerListaPublicacionesCitadasV2(String idP) {
         return mapaP.obtenerListaPublicacionesCitadasV2(idP);
     }

@@ -1,6 +1,8 @@
 package lab1;
 import java.util.Scanner;
 
+import java.util.List;
+
 public class Menu
 {
     private static Menu miMenu=null;
@@ -68,17 +70,16 @@ public class Menu
                 case 5:
                 	aniadirAutorAPublicacion(sn);
                     break;
-     /*           case 6:
-                	obtenerListaPublicacionesCitadas(sn);
+                case 6:
+                	mostrarPublicacionesCitadas(sn);
                     break;
-                case 7:
-                    datos.crearFichero();
-                    System.out.println("El contenido se ha escrito correctamente");
+               case 7:
+            	    mostrarAutoresPublicacion(sn);
                     break;
                 case 8:
-                    for(Actor s:HM_Actor.getListaActoresOrdenada()){System.out.println(s.getNombre());}
+                    mostrarPublicacionesAutor(sn);
                     break;
-                case 9:
+  /*              case 9:
                     exit=true;
                     break;*/
                 case 13:
@@ -143,13 +144,74 @@ public class Menu
     
 
     private void aniadirNuevoAutor(Scanner sn) {
-        System.out.print("ID del autor: ");
+        System.out.print("Introduce el ID del autor: ");
         String id = sn.nextLine();
         System.out.print("Nombre del autor: ");
         String nombre = sn.nextLine();
         gestion.insertarNuevoAutor(id, nombre);
         System.out.println("✅ Autor añadido.");
     }
+    
+    
+    private void mostrarPublicacionesCitadas(Scanner sn) {
+        System.out.print("Introduce el ID de la publicación: ");
+        String idP = sn.nextLine();
+
+        if (gestion.buscarPublicacion(idP) == null) { //por si no existe
+            System.out.println("La publicación con ID '" + idP + "' no existe.");
+            return;
+        }
+        List<Publicacion> citas = gestion.obtenerListaPublicacionesCitadas(idP);
+        if (citas.isEmpty()) {
+            System.out.println("La publicación no cita a ninguna otra.");
+        } else {
+            System.out.println("Publicaciones citadas por '" + idP + "':");
+            for (Publicacion p : citas) {
+                if (p != null) {
+                    System.out.println(" - " + p.getIdentificador() + " - " + p.getTitulo());
+                } else {
+                    System.out.println(" - ID desconocido (la publicación citada no está en la base de datos)");
+                }
+            }
+        }
+    }
+    
+    private void mostrarAutoresPublicacion(Scanner sn) {
+    	System.out.print("Introduce el ID de la publicacion: ");
+    	String idP = sn.nextLine();
+    	List<Autor> idAutores = gestion.obtenerAutoresDeLaPublicacion(idP);
+    	if (idAutores.isEmpty()) {
+    		System.out.println("La publicación no tiene autores registrados.");
+    	}
+    	else {
+    		System.out.println("Autores de la publicación " + idP + ": ");
+    		for (Autor idAutor: idAutores) {
+    			System.out.println(idAutor);
+    		}
+    	}
+    }
+    
+    private void mostrarPublicacionesAutor(Scanner sn) {
+		System.out.print("Introduce el ID del autor: ");
+		String idA = sn.nextLine();
+		List<Publicacion> lPublis = gestion.obtenerPublicacionesAutor(idA);
+		if (lPublis.isEmpty()) {
+			System.out.println("El autor no tiene publicaciones.");
+		}
+		else {
+			System.out.println("Publicaciones del autor con ID: " + idA);
+			for (Publicacion p : lPublis) {
+				if(p!=null) {
+					System.out.println(" - " + p.getIdentificador() + " - " + p.getTitulo());
+				}else {
+					System.out.println("Publicacion  no encontrada."); //si no encuentra el id de la publicacion no ponemos el titulo ni nada
+				}
+			}
+			System.out.println("El autor tiene un total de " + lPublis.size() + " publicaciones.");
+		}
+	}
+    
+    
     
     
     

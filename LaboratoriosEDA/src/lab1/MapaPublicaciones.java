@@ -155,6 +155,9 @@ public class MapaPublicaciones {
 	public List<Publicacion> obtenerListaPublicacionesCitadas(String idP) { //O(n) -> Coste lineal
 		List<Publicacion> lp = new ArrayList<>(); //O(1)
 		ArrayList<String> lCitas = mapaCitas.get(idP);  //O(1)
+		if (lCitas==null) {
+			return lp;
+		}
 		for (String id : lCitas) { //n x O(1 ) -> O(n) donde n es n�mero de elementos de lCita
 			Publicacion p = mapaPublicaciones.get(id); //O(1)
 			lp.add(p); //O(1)
@@ -167,14 +170,14 @@ public class MapaPublicaciones {
 		return lCitas;
 	}
 
-	public List<String> obtenerAutoresPublicacion(String idP){ //O(1) -> Coste constante
-
-		List<String> la = mapaAutores.get(idP);	//O(1) 
-		return la;
-	}
 	
 	public void borrarPublicacion(String idP) { //O(1) -> Coste constante
 		mapaPublicaciones.remove(idP); //O(1)
+	}
+	
+	public List<String> obtenerAutoresPublicacion(String idP){ //O(1) -> Coste constante
+		List<String> la = mapaAutores.get(idP);	//O(1) 
+		return la;
 	}
 
 	//he hecho que el mergeSort sea una clase distinta para que este mas limpio
@@ -199,7 +202,7 @@ public class MapaPublicaciones {
 			}
 		}
 		return lp;
-	}	
+	}
 }
 
 
