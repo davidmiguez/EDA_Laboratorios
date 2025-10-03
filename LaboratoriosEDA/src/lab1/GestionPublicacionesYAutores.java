@@ -1,4 +1,5 @@
 package lab1;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,11 +83,17 @@ public class GestionPublicacionesYAutores {
     	return mapaA.obtenerAutor(pIdA);
     }
 
-    public void guardarDatos(String carpeta) {
-        mapaP.guardarPublicacionesEnFichero("salida-publicaciones.txt");
-        mapaP.guardarFicheroAutoresPorPublicacion("salida-autores-pub.txt");
-        mapaP.guardarFicheroPublicacionesCitadas("salida-citas.txt");
-        mapaA.guardarFicheroAutores("salida-autores.txt");
+    public void guardarDatos(String pCarpeta) {
+    	String dir = pCarpeta;
+    	if (!pCarpeta.endsWith("/") && !pCarpeta.endsWith("\\")) {//asegurar que la ruta al menos sea con el formato correcto
+            dir = pCarpeta + "/";
+        }
+    	File directorio = new File(dir);
+    	directorio.mkdirs();
+        mapaP.guardarPublicacionesEnFichero(dir+"salida-publicaciones.txt");
+        mapaP.guardarFicheroAutoresPorPublicacion(dir+"salida-autores-pub.txt");
+        mapaP.guardarFicheroPublicacionesCitadas(dir+"salida-citas.txt");
+        mapaA.guardarFicheroAutores(dir+"salida-autores.txt");
     }
 	
 }

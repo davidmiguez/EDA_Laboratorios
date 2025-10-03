@@ -99,64 +99,64 @@ public class Menu
         }
     }
     
-    private void cargarDatos() {
+    private void cargarDatos() { //excepcion por si hay algun error al leer los ficheros
     	try {
             long inicio = System.currentTimeMillis();
             gestion.cargarDatos();
             long fin = System.currentTimeMillis();
-            System.out.println("✅ Datos cargados en " + (fin - inicio) + " ms.");
+            System.out.println("Datos cargados en " + (fin - inicio) + " ms.");
         } catch (Exception e) {
-            System.err.println("❌ Error al cargar: " + e.getMessage());
+            System.err.println("Error al cargar: " + e.getMessage());
             e.printStackTrace();
         }
     }
     
     private void buscarPublicacion(Scanner sn) {
-        System.out.print("ID de la publicación: ");
+        System.out.print("Introduce el ID de la publicación: ");
         String id = sn.nextLine();
         Publicacion p = gestion.buscarPublicacion(id);
         if (p != null) {
             System.out.println("Título: " + p.getTitulo());
         } else {
-            System.out.println("❌ Publicación no encontrada.");
+            System.out.println("Publicación no encontrada.");
         }
     }
     
     private void insertarNuevaPublicacion(Scanner sn) {
-    	System.out.print("ID de la publicación: ");
+    	System.out.print("Introduce el ID de la publicación: ");
         String id = sn.nextLine();
-        System.out.print("Titulo de la publicación: ");
+        System.out.print("Introduce el titulo de la publicación: ");
         String titulo = sn.nextLine();
         gestion.insertarNuevaPublicacion(id, titulo);
         System.out.println("Publicación añadida.");  
     }
     
     private void aniadirCitaAPublicacion(Scanner sn) {
-    	System.out.print("ID de la publicación que cita: ");
+    	System.out.print("Introduce el ID de la publicación que cita: ");
         String idPub = sn.nextLine();
-        System.out.print("ID de la publicación citada: ");
+        System.out.print("Introduce el ID de la publicación citada: ");
         String idCitada = sn.nextLine();
         gestion.aniadirCitaAPublicacion(idPub, idCitada);
-        System.out.println("✅ Cita añadida.");
+        System.out.println("Cita añadida.");
     }
     
     private void aniadirAutorAPublicacion(Scanner sn) {
-        System.out.print("ID de la publicación: ");
+        System.out.print("Introduce el ID de la publicación: ");
         String idPub = sn.nextLine();
-        System.out.print("ID del autor: ");
+        System.out.print("Introduce el ID del autor: ");
         String idAutor = sn.nextLine();
         gestion.aniadirAutorAPublicacion(idPub, idAutor);
-        System.out.println("✅ Autor vinculado a la publicación.");
+        System.out.println("Autor añadido a la publicación.");
     }
     
 
     private void aniadirNuevoAutor(Scanner sn) {
         System.out.print("Introduce el ID del autor: ");
         String id = sn.nextLine();
-        System.out.print("Nombre del autor: ");
+        System.out.print("Introduce el nombre del autor: ");
         String nombre = sn.nextLine();
         gestion.insertarNuevoAutor(id, nombre);
-        System.out.println("✅ Autor añadido.");
+        System.out.println("Autor añadido.");
     }
     
     
@@ -243,10 +243,18 @@ public class Menu
     }
     
     private void guardarFicheros(Scanner sn) {
-    	System.out.println("Introduce el nombre de la carpeta donde quieras guardar los ficheros: ");
+    	System.out.println("Introduce la ruta de la carpeta donde quieras guardar los ficheros: ");
+    	System.out.println("Ejplo: C:/Users/DavidMiguez/Desktop/datosActualizados ");
     	String pCarpeta = sn.nextLine();
-    	gestion.guardarDatos(pCarpeta);
-    	System.out.println("Ficheros guardados correctamente.");
+    	try {
+    		long inicio = System.currentTimeMillis();
+    		gestion.guardarDatos(pCarpeta);
+    		long fin = System.currentTimeMillis();
+        	System.out.println("Los ficheros guardados correctamente en " + (fin-inicio) + " ms.");
+    	} catch (Exception e) {
+    		System.err.println("Error al guardar los archivos: " + e.getMessage());
+    	}
+
     }
     
     private void obtenerPublicacionesOrdenadas(Scanner sn) {
