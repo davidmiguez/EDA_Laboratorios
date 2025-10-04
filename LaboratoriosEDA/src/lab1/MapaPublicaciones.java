@@ -171,7 +171,7 @@ public class MapaPublicaciones {
 	}
 
 	
-	public void borrarPublicacion(String idP) { //O(1) -> Coste constante
+	public void borrarPublicacion(String idP) { //O(1) -> coste constante
 		mapaPublicaciones.remove(idP); //O(1)
 	}
 	

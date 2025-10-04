@@ -23,6 +23,10 @@ public class MapaAutores {
 			while(entrada.hasNextLine()) { //n x O(1) -> O(n) donde n es el número de líneas del fichero
 				linea = entrada.nextLine(); //O(1)
 				String [] datos = linea.split(" # "); //O(1)
+				if(datos.length!=2) {
+					throw new RuntimeException("Formato incorrecto en la linea: " + linea);
+				}
+				
 				Autor a = new Autor(datos[0], datos[1]); //O(1)
 				autMapa.put(datos[0], a); //O(1)
 				System.out.println(a.getIdentificador()); //O(1)
@@ -51,7 +55,7 @@ public class MapaAutores {
 		return autMapa.get(idAutor);
 	}
 	
-	public void borrarAutor(String idAutor) { //O(1)-> Coste constante
+	public void borrarAutor(String idAutor) { //O(1)
 		autMapa.remove(idAutor);
 	}
 	

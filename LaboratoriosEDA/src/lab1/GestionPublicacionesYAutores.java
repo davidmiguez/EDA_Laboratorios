@@ -83,10 +83,10 @@ public class GestionPublicacionesYAutores {
     	return mapaA.obtenerAutor(pIdA);
     }
 
-    public void guardarDatos(String pCarpeta) {
-    	String dir = pCarpeta;
-    	if (!pCarpeta.endsWith("/") && !pCarpeta.endsWith("\\")) {//asegurar que la ruta al menos sea con el formato correcto
-            dir = pCarpeta + "/";
+    public void guardarDatos(String pRuta) {
+    	String dir = pRuta;
+    	if (!pRuta.endsWith("/") && !pRuta.endsWith("\\")) {//asegurar que la ruta al menos sea con el formato correcto
+            dir = pRuta + "/";
         }
     	File directorio = new File(dir);
     	directorio.mkdirs();
