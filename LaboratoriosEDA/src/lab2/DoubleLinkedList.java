@@ -11,21 +11,21 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	protected int count;
 
 	// Constructor
-	public DoubleLinkedList() {
+	public DoubleLinkedList() { 
 		last = null;
 		descr = "";
 		count = 0;
 	}
 
-	public void setDescr(String nom) {
+	public void setDescr(String nom) { //O(1)-> Coste constante
 		descr = nom;
 	}
 
-	public String getDescr() {
+	public String getDescr() { //O(1)-> Coste constante
 		return descr;
 	}
 
-	public T removeFirst() {
+	public T removeFirst() { //O(1)-> Coste constante
 		T data = null;
 		if(last!=null) {
 			if(last.next == last) {
