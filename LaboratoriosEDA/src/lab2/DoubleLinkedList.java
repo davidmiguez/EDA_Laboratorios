@@ -44,142 +44,161 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return data;
 	}
 
-	public T removeLast() {
-		// Elimina el  ltimo elemento de la lista
-		// Precondici n:
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	public T removeLast() { //Coste O(1)
+		// Pre:
+		// Post: elimina el ultimo elemento de la lista
 		T data = null;
-		if(last!=null) {
-			if(last.next == last){
-				data = last.data;
+		if (last == null) {
+			return null;
+		}
+		data = last.data;
+		
+		if(count==1) { //si la lista tiene 1 elemento
+			last = null;
+		}else {
+			last.prev.next = last.next;
+			last.next.prev = last.prev;
+			last = last.prev;
+		}
+		count--;
+		return data;
+	}
+
+	public T remove(T elem) { // Cose O(n) donde n es el tamaño total de la lista en el peor de los casos
+		//Pre: T puede o no estar en la lista. La lista puede estar vacia.
+		// Post: Elimina un elemento concreto de la lista
+		if(last==null) {
+			return null;
+		}
+		Node<T> actual=last.next;//first
+		T data = null;
+		
+		while(actual != last && !actual.data.equals(elem)) {
+			actual=actual.next;
+		}
+		boolean enc = actual.data.equals(elem);
+		if(enc) {
+			data = actual.data;
+			if(count==1) { //si T es el unico elemento de la lista
 				last = null;
-			}else {
-				data = last.data;
-				last.prev.next = last.next;
-				last.next.prev = last.prev;
-				last = last.prev;
+			}else { //mas de un elemento
+				actual.prev.next = actual.next;
+				actual.next.prev = actual.prev;
+				
+				if(actual==last) { //si T era el ultimo
+					last = actual.prev;
+				}
 			}
 			count--;
 		}
 		return data;
+		
 	}
 
-	public T remove(T elem) {
-		// Elimina un elemento concreto de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-		T data = null;
-		boolean enc = false;
-		if(last!=null) {
-			Node<T> actual = last;
-			do {
-				if(actual.data.equals(elem)) {
-					enc = true;
-				}else {
-					actual = actual.next;
+	public void removeAll(T elem) { //Coste O(n) donde n es tamaño de la lista.
+		// Pre:
+		// Post: elimina todas las apariciones del elemento T de la lista.
+		if(last == null) {
+			return;
+		}
+		Node<T> actual = last.next;
+		Node<T> aux;
+		boolean vuelta = false;
+		
+		while(last != null && !vuelta) {
+			if(actual.data.equals(elem)) {
+				if(actual.next == actual) { //si hay un solo nodo
+					last=null;
+					count = 0;
+					return;
 				}
-			}while(!enc && actual!=last);
-			if(enc) {
-				if(actual.next==actual) {
-					data = last.data;
-					last = null;
-				}else {
-					actual.prev.next = actual.next;
-					actual.next.prev = actual.prev;
-					if(actual == last) {
-						last = last.prev;
-					}
+				aux = actual.next;
+				actual.prev.next = actual.next;
+				actual.next.prev = actual.prev;
+				
+				if(actual == last) { //si T era last
+					last=actual.prev;
 				}
 				count--;
-			}	
-		}
-		return data;
-	}
-
-	public void removeAll(T elem) {
-		// Elimina todas las apariciones de un elemento de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-		if(last != null) {
-			Node<T> actual = last.next;
-			do {
-				if(actual.data.equals(elem)) {
-					if(actual.next==actual) {
-						last = null;
-					}else {
-						actual.prev.next = actual.next;
-						actual.next.prev = actual.prev;
-						if(actual == last) {
-							last = last.prev;
-						}
-					}
-					count--;
-				}else {
-					actual = actual.next;
-				}
-			}while(actual.prev != last);
+				actual = aux;
+			}else { //si actual no es T, avanzar al siguiente
+				actual = actual.next;
+			}
+			
+			if(actual == last.next) {
+				vuelta = true;
+			}
 		}
 		
 	}
 
-	public T first() {
+	public T first() { //Coste O(1)
 		// Da acceso al primer elemento de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-		T primero = null;
+		T first = null;
 		if(last != null) {
-			primero = last.next.data;
+			first = last.next.data;
 		}
-		return primero;
+		return first;
 	}
 
-	public T last() {
-		// Da acceso al  ltimo elemento de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-		T ultimo = null;
+	public T last() {//Coste O(1)
+		// Da acceso al ultimo elemento de la lista
+		T ult = null;
 		if(last != null) {
-			ultimo = last.data;
+			ult = last.data;
 		}
-		return ultimo;
+		return ult;
 	}
 
-	public DoubleLinkedList<T> clone() {
-		// Devuelve una copia de la lista (no duplica el puntero)
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	public DoubleLinkedList<T> clone() {//Coste O(n) donde n es el tamaño de la lista original
+		// Pre:
+		// Post: devuelve una copia de la lista, la lista original no se modifica
+		if(last == null) {
+			return new DoubleLinkedList<T>();
+		}
+		
 		Node<T> actual = last.next;
 		DoubleLinkedList<T> l = new DoubleLinkedList<T>();
 		l.last = null;
-		do {
-			Node<T> nuevo = new Node<T>(actual.data);
-			if(l.last == null) {
-				l.last = nuevo;
-				nuevo.next = nuevo;
-				nuevo.prev = nuevo;
-			}else {
-				nuevo.prev = l.last;
-				l.last.next = nuevo;
-				nuevo.next = l.last;
-				l.last.prev = nuevo;
-				l.last = nuevo;
-			}
-			l.count++;
-			actual = actual.next;
-		}while(actual.prev != last);
-		return l;
+		
+		Node<T> nuevo = new Node<T>(actual.data);
+		l.last=nuevo;
+		nuevo.next = nuevo;
+	    nuevo.prev = nuevo;
+	    l.count = 1;
+	    
+	    actual = actual.next;
+	    while(actual!=this.last.next) {
+	    	nuevo = new Node<T>(actual.data);
+	    	nuevo.prev = l.last;
+	    	l.last.next = nuevo;
+	    	
+	    	nuevo.next = l.last.next;
+	    	l.last.next.prev = nuevo; //first.prev = nuevo
+	    	
+	    	l.last = nuevo;
+	    	l.count++;
+	    	
+	    	actual = actual.next;
+	    }
+	    return l;
 	}
 
-	public boolean contains(T elem) {
-		// Determina si la lista contiene un elemento concreto
+	public boolean contains(T elem) { // O(n) donde n es el tamaño de la lista
+		// Pre:
+		// Post: determina si la lista contiene un elemento concreto
 		if (isEmpty())
 			return false;
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
 		if(find(elem)==null)
 			return false;
 		return true;
 
 	}
 
-	public T find(T elem) {
-		// Determina si la lista contiene un elemento concreto, y develve su referencia,
-		// null en caso de que no est 
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	public T find(T elem) { // O(n) donde n es, en el peor de los casos, el numero total de elementos de la lista.
+		// Post: determina si la lista contiene un elemento T y develve su referencia,
+		// devuelve null en caso de que T no este en la lista.
+
 		T data = null;
 		boolean enc = false;
 		Node<T> actual = last.next;
@@ -196,24 +215,22 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return data;
 	}
 
-	public boolean isEmpty() {
-		// Determina si la lista est  vac a
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	public boolean isEmpty() { // O(1)
+		// determina si la lista esta vacia
 		return last==null;
 	}
 
-	public int size() {
-		// Determina el n mero de elementos de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	public int size() { // O(1)
+		// determina el tamaño de lal lista
 		return count;
 	}
 
-	/** Return an iterator to the stack that iterates through the items . */
+	
+	//ITERATOR
 	public Iterator<T> iterator() {
 		return new ListIterator();
 	}
 
-	// an iterator, doesn't implement remove() since it's optional
 	private class ListIterator implements Iterator<T> {
 		Node<T> actual;
 		int cont;
@@ -226,7 +243,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			}
 		}
 		@Override
-		public boolean hasNext() {
+		public boolean hasNext() {// O(1)
 			//return true;
 			if(cont == count) {
 				return false;
@@ -236,16 +253,14 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		}
 
 		@Override
-		public T next() {
+		public T next() { // O(1)
 			T data = actual.data;
 			actual = actual.next;
 			cont++;
 			return data;
 		}
 
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-
-	} // private class
+	}
 
 	public void visualizarNodos() {
 		System.out.println(this.toString());
@@ -253,13 +268,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	@Override
 	public String toString() {
-		String result = new String();
+		String rdo = new String();
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
 			T elem = it.next();
-			result = result + "[" + elem.toString() + "] \n";
+			rdo = rdo + "[" + elem.toString() + "] \n";
 		}
-		return "DoubleLinkedList " + result + "]";
+		return "DoubleLinkedList " + rdo + "]";
 	}
 
 }
