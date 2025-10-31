@@ -1,6 +1,5 @@
 package lab2;
 
-
 	public class Node<T> {
 		public T data; 			// dato del nodo
 		public Node<T> prev; 	// puntero al anterior nodo de la lista

@@ -1,18 +1,16 @@
 package lab2;
 
-
-
 public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements UnorderedListADT<T> {
 	
-	public void addToFront(T elem) {
-	// a ade un elemento al comienzo
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	public void addToFront(T elem) { //O(1)
+		//Pre:
+		//Post: añade un elemento al comienzo de la lista
 		Node<T> nuevo = new Node<T>(elem);
-		if(last == null) {
+		if(last == null){
 			last = nuevo;
 			nuevo.next = last;
 			nuevo.prev = last;
-		}else {
+		}else{
 			last.next.prev = nuevo;
 			nuevo.next = last.next;
 			last.next = nuevo;

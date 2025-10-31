@@ -1,6 +1,5 @@
 package lab2;
 
-
 public class PruebaOrderedDoubleLinkedList {	
 		
 		public static void main(String[] args)  {

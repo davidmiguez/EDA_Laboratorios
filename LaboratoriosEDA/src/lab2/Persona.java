@@ -1,6 +1,5 @@
 package lab2;
 
-
 public class Persona implements Comparable<Persona> {
 	
 	// atributos
@@ -46,4 +45,4 @@ public class Persona implements Comparable<Persona> {
 		return name + " " + dni;
 	}
 	
-} // end Persona
+}
