@@ -11,23 +11,22 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	protected int count;
 
 	// Constructor
-	public DoubleLinkedList() {
+	public DoubleLinkedList() { 
 		last = null;
 		descr = "";
 		count = 0;
 	}
 
-	public void setDescr(String nom) {
+	public void setDescr(String nom) { //O(1)-> Coste constante
 		descr = nom;
 	}
 
-	public String getDescr() {
+	public String getDescr() { //O(1)-> Coste constante
 		return descr;
 	}
 
-	public T removeFirst() { //O(1)
-		// Elimina el primer elemento de la lista
-		// Precondici n:
+	public T removeFirst() { //O(1)-> Coste constante
+	// Elimina el primer elemento de la lista
 		T data = null;
 		if(last!=null) {
 			if(last.next == last) {
@@ -43,7 +42,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return data;
 	}
 
-	public T removeLast() { //Coste O(1)
+	public T removeLast() { //O(1)-> Coste constante
 		// Pre:
 		// Post: elimina el ultimo elemento de la lista
 		T data = null;
@@ -63,7 +62,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return data;
 	}
 
-	public T remove(T elem) { // Cose O(n) donde n es el tamaño total de la lista en el peor de los casos
+	public T remove(T elem) { //O(n)-> Coste lineal  
 		//Pre: T puede o no estar en la lista. La lista puede estar vacia.
 		// Post: Elimina un elemento concreto de la lista
 		if(last==null) {
@@ -72,7 +71,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		Node<T> actual=last.next;//first
 		T data = null;
 		
-		while(actual != last && !actual.data.equals(elem)) {
+		while(actual != last && !actual.data.equals(elem)) { //n x O(1) -> O(n) donde n es el n�mero de elementos de la lista hasta encontrar el elemento
 			actual=actual.next;
 		}
 		boolean enc = actual.data.equals(elem);
@@ -94,7 +93,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		
 	}
 
-	public void removeAll(T elem) { //Coste O(n) donde n es tamaño de la lista.
+	public void removeAll(T elem) { //O(n)-> Coste lineal 
 		// Pre:
 		// Post: elimina todas las apariciones del elemento T de la lista.
 		if(last == null) {
@@ -104,7 +103,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		Node<T> aux;
 		boolean vuelta = false;
 		
-		while(last != null && !vuelta) {
+		while(last != null && !vuelta) {  //n x O(1) -> O(n) donde n es tamaño de la lista.
 			if(actual.data.equals(elem)) {
 				if(actual.next == actual) { //si hay un solo nodo
 					last=null;
@@ -131,7 +130,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		
 	}
 
-	public T first() { //Coste O(1)
+	public T first() { //O(1)-> Coste constante
 		// Da acceso al primer elemento de la lista
 		T first = null;
 		if(last != null) {
@@ -140,7 +139,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return first;
 	}
 
-	public T last() {//Coste O(1)
+	public T last() {//O(1)-> Coste constante
 		// Da acceso al ultimo elemento de la lista
 		T ult = null;
 		if(last != null) {
@@ -149,7 +148,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return ult;
 	}
 
-	public DoubleLinkedList<T> clone() {//Coste O(n) donde n es el tamaño de la lista original
+	public DoubleLinkedList<T> clone() {//O(n)-> Coste lineal 
 		// Pre:
 		// Post: devuelve una copia de la lista, la lista original no se modifica
 		if(last == null) {
@@ -167,7 +166,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	    l.count = 1;
 	    
 	    actual = actual.next;
-	    while(actual!=this.last.next) {
+	    while(actual!=this.last.next) { //n x O(1) -> O(n) donde n es tamaño de la lista.
 	    	nuevo = new Node<T>(actual.data);
 	    	nuevo.prev = l.last;
 	    	l.last.next = nuevo;
@@ -183,7 +182,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	    return l;
 	}
 
-	public boolean contains(T elem) { // O(n) donde n es el tamaño de la lista
+	public boolean contains(T elem) { //O(n)-> Coste lineal 
 		// Pre:
 		// Post: determina si la lista contiene un elemento concreto
 		if (isEmpty())
@@ -194,7 +193,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	}
 
-	public T find(T elem) { // O(n) donde n es, en el peor de los casos, el numero total de elementos de la lista.
+	public T find(T elem) { //O(n)-> Coste lineal 
 		// Post: determina si la lista contiene un elemento T y develve su referencia,
 		// devuelve null en caso de que T no este en la lista.
 
@@ -207,30 +206,30 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			}else {
 				actual = actual.next;
 			}
-		}while(!enc && actual.prev != last);
+		}while(!enc && actual.prev != last); //n x O(1) -> O(n) donde n es tamaño de la lista.
 		if(enc) {
 			data = actual.data;
 		}
 		return data;
 	}
 
-	public boolean isEmpty() { // O(1)
+	public boolean isEmpty() {  //O(1)-> Coste constante
 		// determina si la lista esta vacia
 		return last==null;
 	}
 
-	public int size() { // O(1)
+	public int size() {  //O(1)-> Coste constante
 		// determina el tamaño de lal lista
 		return count;
 	}
 
 	
 	//ITERATOR
-	public Iterator<T> iterator() {
+	public Iterator<T> iterator() {  //O(1)-> Coste constante
 		return new ListIterator();
 	}
 
-	private class ListIterator implements Iterator<T> {
+	private class ListIterator implements Iterator<T> {  //O(1)-> Coste constante
 		Node<T> actual;
 		int cont;
 		public ListIterator() {
@@ -242,7 +241,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			}
 		}
 		@Override
-		public boolean hasNext() {// O(1)
+		public boolean hasNext() { //O(1)-> Coste constante
 			//return true;
 			if(cont == count) {
 				return false;
@@ -252,7 +251,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		}
 
 		@Override
-		public T next() { // O(1)
+		public T next() {  //O(1)-> Coste constante
 			T data = actual.data;
 			actual = actual.next;
 			cont++;
@@ -261,12 +260,12 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	}
 
-	public void visualizarNodos() {
+	public void visualizarNodos() {  //O(1)-> Coste constante
 		System.out.println(this.toString());
 	}
 
 	@Override
-	public String toString() {
+	public String toString() {  //O(1)-> Coste constante
 		String rdo = new String();
 		Iterator<T> it = iterator();
 		while (it.hasNext()) {
