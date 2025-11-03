@@ -22,16 +22,10 @@ public class GestionPublicacionesYAutores {
 	}
 	
 	public List<Autor> obtenerAutoresDeLaPublicacion(String idP){ //O(n)
-		//CAMBIO
-		//List<String> la = mp.obtenerAutoresDeLaPublicacion(idP); //O(1)
+	
 		OrderedDoubleLinkedList<String> la = mapaP.obtenerAutoresDeLaPublicacion(idP); //O(1)
 		List<Autor> lAutores = new ArrayList<>(); //O(1)
-		//CAMBIO
-		/*for(String idA: la) { //n x O(1) -> O(n) donde n es el número de elementos de la
-			Autor a = ma.obtenerAutor(idA); //O(1)
-			lAutores.add(a); //O(1)
-		}*/
-		//CAMBIO
+		
 		Iterator<String> it = la.iterator();
 		while(it.hasNext()) {
 			String idA = it.next();

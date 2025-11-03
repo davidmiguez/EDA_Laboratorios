@@ -40,15 +40,15 @@ public class MapaPublicaciones {
 				String idP = datos[0]; // O(1)
 				if (datos.length == 2) {
 					String idA = datos[1]; // O(1)
-					// El coste de un if es el coste de su condición x el coste de su código
+		
 					if (!mapaAutores.containsKey(idP)) { // O(1)xO(1) -> O(1)
-						//CAMBIO
+						
 						mapaAutores.put(idP, new OrderedDoubleLinkedList<>()); // O(1)
 					}
 					mapaAutores.get(idP).add(idA); // O(1)
 				} else {
 					if (!mapaAutores.containsKey(idP)) { // O(1)xO(1) -> O(1)
-						//CAMBIO
+						
 						mapaAutores.put(idP, new OrderedDoubleLinkedList<>()); // O(1)
 					}
 				}
@@ -65,16 +65,9 @@ public class MapaPublicaciones {
 			PrintWriter salida = new PrintWriter(new File(nom)); // Abrimos el fichero para escritura
 			// Recorremos el mapa que relaciona los autores con las publicaciones
 			// for: n x O( m) -> O(nxm) -> O(n) donde n es el número de claves del
-			// mapaAutores
+			
 			for (String idP : mapaAutores.keySet()) { // Recorremos las claves (id de publicación) del mapa de autores
-				// for: m x O(1) -> O(m) donde m es el número de elementos de la lista asociada
-				// a la clave idP
-				//CAMBIO
-				/*for (String idA : mapaAutores.get(idP)) { // Recorremos los identificadores de los autores asociados a
-															// idP
-					salida.println(idP + " # " + idA); // O(1)
-				}*/
-				//CAMBIO
+				
 				Iterator<String> it = mapaAutores.get(idP).iterator();
 				while(it.hasNext()) {
 					String idA = it.next();
@@ -95,15 +88,12 @@ public class MapaPublicaciones {
 			String linea;
 			while (entrada.hasNextLine()) { // Mientras haya líneas que leer
 				linea = entrada.nextLine(); // Lee una línea del fichero y avanza a la siguiente
-				// linea = "Q43261508 # Q79773097"
 				String datos[] = linea.split(" # ");
-				// datos[0] = "Q43261508"
-				// datos[1] = "Q79773097"
+			
 				if (!mapaCitas.containsKey(datos[0])) {
 					mapaCitas.put(datos[0], new UnorderedDoubleLinkedList<>());
 				}
-				//CAMBIO
-				//mapaCitas.get(datos[0]).add(datos[1]);
+				
 				mapaCitas.get(datos[0]).addToFront(datos[1]);
 			}
 			entrada.close();
@@ -118,10 +108,7 @@ public class MapaPublicaciones {
 			PrintWriter salida = new PrintWriter(new File(nom));
 			// Recorremos las claves del mapa de citas
 			for (String idP : mapaCitas.keySet()) {
-				//CAMBIO
-				/*for (String idC : mapaCitas.get(idP)) {
-					salida.println(idP + " # " + idC);
-				}*/
+				
 				Iterator<String> it = mapaCitas.get(idP).iterator();
 				while(it.hasNext()) {
 					String idC = it.next();
@@ -141,9 +128,7 @@ public class MapaPublicaciones {
 			String linea = null;
 			while (entrada.hasNextLine()) {
 				linea = entrada.nextLine();
-				// linea = "Q36934323 # Quality of life in MAP.3 (Mammary Prevention 3): a
-				// randomized, placebocontrolled trial evaluating exemestane for prevention of
-				// breast cancer"
+				
 				String[] datos = linea.split(" # ");
 				Publicacion p = new Publicacion(datos[0], datos[1]);
 				mapaPublicaciones.put(datos[0], p);
@@ -185,15 +170,12 @@ public class MapaPublicaciones {
 
 	// Añadir una cita a una publicación (dados sus identificadores)
 	public void aniadirCitaAPublicacion(String idP, String idPCitada) { // O(1) -> Coste constante
-		/*
-		 * if (mapaCitas.containsKey(idP)) { mapaCitas.get(idP).add(idPCitada); } else {
-		 * mapaCitas.put(idP, new ArrayList<>()); mapaCitas.get(idP).add(idPCitada); }
-		 */
+		
 
 		if (!mapaCitas.containsKey(idP)) { // O(1)
 			mapaCitas.put(idP, new UnorderedDoubleLinkedList<>()); // O(1)
 		}
-		//CAMBIO
+		
 		//mapaCitas.get(idP).add(idPCitada); // O(1)
 		mapaCitas.get(idP).addToFront(idPCitada);
 	}
@@ -202,7 +184,7 @@ public class MapaPublicaciones {
 	// constante
 	public void aniadirAutorAPublicacion(String idP, String idA) {
 		if (!mapaAutores.containsKey(idP)) { // O(1)
-			//CAMBIO
+		
 			mapaAutores.put(idP, new OrderedDoubleLinkedList<>()); // O(1)
 		}
 		mapaAutores.get(idP).add(idA); // O(1)
@@ -213,17 +195,7 @@ public class MapaPublicaciones {
 	public List<Publicacion> obtenerListaPublicacionesCitadas(String idP) { // O(n) -> Coste lineal
 		List<Publicacion> lp = new ArrayList<>(); // O(1)
 
-		// Obtengo los identificadores de las publicaciones citadas por idP
-//		ArrayList<String> lCitas = mapaCitas.get(idP); // O(1)
-//		// Recorremos todas las citas
-//		// for: n x O(1 ) -> O(n) donde n es número de elementos de lCitas
-//		for (String id : lCitas) { // Por cada identificador que haya en la lista de citas
-//			// O(1)
-//			Publicacion p = mapaPublicaciones.get(id); // Obtengo el objeto Publicacion asociado al id
-//			// O(1)
-//			lp.add(p); // Añado el objeto Publicacin a la lista que vamos a devolver
-//		}
-		//CAMBIO
+		
 		Iterator<String> it = mapaCitas.get(idP).iterator();
 		while(it.hasNext()) {
 			String id = it.next();
@@ -234,16 +206,6 @@ public class MapaPublicaciones {
 		return lp;
 	}
 
-	// Dada una publicación (identificador), devolver una lista con las
-	// publicaciones que cita
-	//CAMBIO
-	/*public List<String> obtenerListaPublicacionesCitadasV2(String idP) { // O(1) -> Coste constante
-		// Obtengo los identificadores de las publicaciones citadas por idP
-		ArrayList<String> lCitas = mapaCitas.get(idP); // O(1)
-
-		return lCitas;
-	}*/
-	//CAMBIO
 	public UnorderedDoubleLinkedList<String> obtenerListaPublicacionesCitadasV2(String idP) { // O(1) -> Coste constante
 		// Obtengo los identificadores de las publicaciones citadas por idP
 		UnorderedDoubleLinkedList<String> lCitas = mapaCitas.get(idP); // O(1)
@@ -251,15 +213,6 @@ public class MapaPublicaciones {
 		return lCitas;
 	}
 
-	// Dada una publicación, devolver una lista con sus autores
-	//CAMBIO
-	/*public List<String> obtenerAutoresDeLaPublicacion(String idP) { // O(1) -> Coste constante
-		// Obtengo la lista de identificadores de autor asociada a la publicación idP
-		List<String> la = mapaAutores.get(idP); // O(1)
-
-		return la;
-	}*/
-	//CAMBIO
 	public OrderedDoubleLinkedList<String> obtenerAutoresDeLaPublicacion(String idP) { // O(1) -> Coste constante
 		// Obtengo la lista de identificadores de autor asociada a la publicación idP
 		OrderedDoubleLinkedList<String> la = mapaAutores.get(idP); // O(1)
@@ -385,14 +338,7 @@ public class MapaPublicaciones {
 		// Recorremos todas las claves del mapaAutores, las claves son los ids de la
 		// publicaciones
 		for (String idP : mapaAutores.keySet()) { // n x O(1) -> O(n) donde n es el número de claves del mapaAutores
-			// Por idP obtengo su lista de autores
-			//CAMBIO
-			/*List<String> la = mapaAutores.get(idP); // O(1)
-			int pos = la.indexOf(idA); // O(1)
-			if (pos != -1) { // Hemos encontrado al autor entre los autores de la publicación //O(1)
-				Publicacion p = mapaPublicaciones.get(idP); // O(1)
-				lp.add(p); // O(1)
-			}*/
+			
 			OrderedDoubleLinkedList<String> la = mapaAutores.get(idP);
 			if(la.contains(idA)) {
 				Publicacion p = mapaPublicaciones.get(idP); // O(1)

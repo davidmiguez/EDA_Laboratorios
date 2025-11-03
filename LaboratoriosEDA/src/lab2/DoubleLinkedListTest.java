@@ -37,50 +37,6 @@ public class DoubleLinkedListTest {
 		assertEquals("DoubleLinkedList", dll.getDescr());
 	}
 
-//	@Test
-//	public void testRemoveFirst() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testRemoveLast() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testRemove() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testRemoveAll() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testFirst() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testLast() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testClone() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testContains() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testFind() {
-//		fail("Not yet implemented");
-//	}
 
 	@Test
 	public void testIsEmpty() {
@@ -96,11 +52,6 @@ public class DoubleLinkedListTest {
 	public void testIterator() {
 		assertNotNull(dll.iterator());
 	}
-
-//	@Test
-//	public void testVisualizarNodos() {
-//		fail("Not yet implemented");
-//	}
 
 	@Test
 	public void testToString() {
