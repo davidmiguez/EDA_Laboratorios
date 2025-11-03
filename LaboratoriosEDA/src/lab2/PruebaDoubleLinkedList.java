@@ -9,10 +9,10 @@ import java.util.Iterator;
 public class PruebaDoubleLinkedList {
 	
 	public static void visualizarNodos(UnorderedDoubleLinkedList<Integer> l) {
-		Iterator<Integer> it = l.iterator();
+		Iterator<Integer> itr = l.iterator();
 		System.out.println();
-		while (it.hasNext()) {
-			Integer num = it.next();
+		while (itr.hasNext()) {
+			Integer num = itr.next();
 			System.out.println(num);
 		}
 	}
@@ -22,14 +22,14 @@ public class PruebaDoubleLinkedList {
 		
 		UnorderedDoubleLinkedList<Integer> l = new UnorderedDoubleLinkedList<Integer>();
 		l.addToRear(1);
-		l.addToRear(3);
-		l.addToRear(6);
-		l.addToRear(7);
-		l.addToRear(9);
-		l.addToRear(0);
 		l.addToRear(20);
-		l.addToFront(8);
-		l.remove(new Integer(7));
+		l.addToRear(5);
+		l.addToRear(8);
+		l.addToRear(11);
+		l.addToRear(0);
+		l.addToRear(4);
+		l.addToFront(6);
+		l.remove(new Integer(8));
 
 		
 		System.out.print(" Lista ...............");
@@ -38,9 +38,9 @@ public class PruebaDoubleLinkedList {
 				
 		
 		System.out.println("Prueba Find ...............");
-		System.out.println("9? " + l.find(9));
-		System.out.println("0? " + l.find(0));
-		System.out.println("7? " + l.find(7));
+		System.out.println("11? " + l.find(11));
+		System.out.println("0? " + l.find(0);
+		System.out.println("8? " + l.find(8));
 		
 }
 }
