@@ -6,12 +6,12 @@ public class PruebaOrderedDoubleLinkedList {
 			
 			OrderedDoubleLinkedList<Integer> l = new OrderedDoubleLinkedList<Integer>();
 			l.add(1);
-			l.add(3);
-			l.add(6);
+			l.add(2);
+			l.add(4);
+			l.add(5);
 			l.add(7);
-			l.add(9);
-			l.add(0);
 			l.add(20);
+			l.add(0);
 			l.remove(new Integer(7));
 
 			
@@ -22,22 +22,22 @@ public class PruebaOrderedDoubleLinkedList {
 			
 			System.out.println("Prueba Find ...............");
 			System.out.println("20? " + l.find(20));
-			System.out.println("9? " + l.find(9));
-			System.out.println("9? " + l.find(9));
+			System.out.println("7? " + l.find(9));
+			System.out.println("6? " + l.find(9));
 			System.out.println("0? " + l.find(0));
 			System.out.println("7? " + l.find(7));
 			
 			
 			
 			OrderedDoubleLinkedList<Persona> l2 = new OrderedDoubleLinkedList<Persona>();
-			l2.add(new Persona("jon", "1111"));
-			l2.add(new Persona("ana", "7777"));
-			l2.add(new Persona("amaia", "3333"));
-			l2.add(new Persona("unai", "8888"));
-			l2.add(new Persona("pedro", "2222"));
-			l2.add(new Persona("olatz", "5555"));
+			l2.add(new Persona("Marta", "11"));
+			l2.add(new Persona("Peio", "27"));
+			l2.add(new Persona("Tomas", "37"));
+			l2.add(new Persona("Sandra", "58"));
+			l2.add(new Persona("Pedro", "22"));
+			l2.add(new Persona("Jon", "45"));
 
-			l2.remove(new Persona("", "8888"));
+			l2.remove(new Persona("", "58"));
 
 			
 			System.out.print(" Lista ...............");
@@ -46,10 +46,10 @@ public class PruebaOrderedDoubleLinkedList {
 					
 			
 			System.out.println("Prueba Find ...............");
-			System.out.println("2222? " + l2.find(new Persona("", "2222")));
-			System.out.println("5555? " + l2.find(new Persona("", "5555")));
-			System.out.println("7777? " + l2.find(new Persona("", "7777")));	
-			System.out.println("8888? " + l2.find(new Persona("", "8888")));	
+			System.out.println("22? " + l2.find(new Persona("", "22")));
+			System.out.println("55? " + l2.find(new Persona("", "45")));
+			System.out.println("27? " + l2.find(new Persona("", "27")));	
+			System.out.println("58? " + l2.find(new Persona("", "58")));	
 			
 			
 	}
