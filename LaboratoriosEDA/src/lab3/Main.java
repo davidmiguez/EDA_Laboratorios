@@ -2,17 +2,17 @@ package lab3;
 
 public class Main {
 	public static void main(String[] args) {
-		MapaPublicaciones mp = new MapaPublicaciones();
-		mp.cargarPublicacionesDeFichero("Datuak/Datuak/publicaciones.txt");
-		mp.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt");
-		mp.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt");
+		MapaPublicaciones mapaP = new MapaPublicaciones();
+		mapaP.cargarPublicacionesDeFichero("Datuak/Datuak/publicaciones.txt");
+		mapaP.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt");
+		mapaP.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt");
 		
 		
-		MapaAutores ma = new MapaAutores();
-		ma.cargarFicheroAutores("Datuak/Datuak/authors-name-all.txt");
+		MapaAutores mapaA = new MapaAutores();
+		mapaA.cargarFicheroAutores("Datuak/Datuak/authors-name-all.txt");
 		
 		Graph g = new Graph();
-		g.crearGrafo(ma, mp);
+		g.crearGrafo(mapaA, mapaP);
 		System.out.println(g.estanConectadosBIS("", ""));
 		System.out.println(g.estanConectadosAL("", ""));
 	}

@@ -2,6 +2,9 @@ package lab3;
 
 import java.util.List;
 
+import lab2.MapaAutores;
+import lab2.MapaPublicaciones;
+
 public class ProgramaPrincipal {
 	public static void main(String[] args) {
 		//Obtener la fecha actual del sistema
@@ -14,11 +17,8 @@ public class ProgramaPrincipal {
 		mp.cargarPublicacionesDeFichero("Datuak/Datuak/publicaciones.txt");
 		mp.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt");
 		mp.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt");
-		//List<Publicacion> po = mp.obtenerPublicacionesOrdenadas();
-		//System.out.println("Publicaciones ordenadas");
-		//System.out.println(po.get(0).getIdentificador());
-		//System.out.println(po.get(po.size()-1).getIdentificador());
-		System.out.println("Tiempo de ejecuciÃ³n: "+(milisFin-milisInicio)+" milisegundos");
+		
+		System.out.println("Tiempo de ejecución: "+(milisFin-milisInicio)+" milisegundos");
 		
 		
 	}
