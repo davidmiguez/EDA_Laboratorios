@@ -14,19 +14,19 @@ public class Autor {
 	}
 	
 	
-	public String getIdentificador() {
+	public String getIdentificador() { //O(1) -> Coste constante
 		return identificador;
 	}
 	
-	public void setIdentificador(String identificador) {
+	public void setIdentificador(String identificador) {//O(1) -> Coste constante
 		this.identificador = identificador;
 	}
 	
-	public String getNombre() {
+	public String getNombre() {//O(1) -> Coste constante
 		return nombre;
 	}
 	
-	public void setNombre(String nombre) {
+	public void setNombre(String nombre) {//O(1) -> Coste constante
 		this.nombre = nombre;
 	}
 	

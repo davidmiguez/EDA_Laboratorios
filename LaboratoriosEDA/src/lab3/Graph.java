@@ -10,15 +10,9 @@ public class Graph {
 	HashMap<String, Integer> th;
 	String[] keys;
 	ArrayList<Integer>[] adjList;
-	//       nombreA, idA
 	HashMap<String, String> mapaNombres;
 
 	public void crearGrafo(MapaAutores lista, MapaPublicaciones mapaP) {
-		// Post: crea el grafo desde la lista de autores
-		// Los nodos son nombres de autores
-
-		// Paso 1: llenar th
-		// COMPLETAR C�DIGO
 		int i=0;
 		th = new HashMap<String,Integer>();
 		mapaNombres = new HashMap<String,String>();
@@ -30,13 +24,10 @@ public class Graph {
 				
 			}		
 		}
-		// Paso 2: llenar keys�
 		keys = new String[th.size()];
 		for (String k : th.keySet()) {
 			keys[th.get(k)] = k;
 		}
-		// Paso 3: llenar adjList�
-		// COMPLETAR C�DIGO
 		adjList = new ArrayList[th.keySet().size()];
 		for(int j=0;j<adjList.length;j++) {
 			String nom = keys[j];
@@ -76,7 +67,6 @@ public class Graph {
 		int pos2 = th.get(a2);
 		boolean enc = false;
 		boolean[] examinados = new boolean[th.size()];
-		// COMPLETAR C�DIGO
 		porExaminar.add(pos1);
 		while(!enc && !porExaminar.isEmpty()) {
 			int pos = porExaminar.remove();
@@ -97,35 +87,10 @@ public class Graph {
 		return enc;
 
 	}
-	/*public boolean estanConectados(String a1, String a2) {
-		Queue<Integer> porExaminar = new LinkedList<Integer>();
-
-		int pos1 = th.get(a1);
-		int pos2 = th.get(a2);
-		boolean enc = false;
-		boolean[] examinados = new boolean[th.size()];
-		// COMPLETAR C�DIGO
-		porExaminar.add(pos1);
-		while(!enc && !porExaminar.isEmpty()) {
-			int pos = porExaminar.remove();
-			if(pos == pos2) {
-				enc = true;
-			}else {
-				if(!examinados[pos]) {
-					examinados[pos] = true;
-					for(int p: adjList[pos]) {
-						porExaminar.add(p);
-					}
-				}
-			}
-		}
-		return enc;
-
-	}*/
-
+	
 	public ArrayList<String> estanConectadosAL(String a1, String a2) {
 
-		// COMPLETAR C�DIGO
+
 		HashMap<String, String> mapa = new HashMap<>();
 		mapa.put(a1, a1);
 		Queue<Integer> porExaminar = new LinkedList<>();
