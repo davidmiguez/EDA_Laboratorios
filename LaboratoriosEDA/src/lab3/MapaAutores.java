@@ -14,12 +14,15 @@ public class MapaAutores {
 
 	private Map<String, Autor> autMapa;
 
-	
 	public MapaAutores() { //O(1)
-		//listaAutores = new ArrayList<Autor>();
+	
 		autMapa = new HashMap<>(); //O(1)
 	}
 	
+	public Map<String, Autor> getMapaAutores() {
+		return autMapa;
+	}
+
 	public void cargarFicheroAutores(String nombre) { //O(n)
 		try {
 			Scanner entrada = new Scanner(new FileReader(nombre)); //O(1)

@@ -13,7 +13,7 @@ public class Graph {
 	//       nombreA, idA
 	HashMap<String, String> mapaNombres;
 
-	public void crearGrafo(MapaAutores lista, MapaPublicaciones mp) {
+	public void crearGrafo(MapaAutores lista, MapaPublicaciones mapaP) {
 		// Post: crea el grafo desde la lista de autores
 		// Los nodos son nombres de autores
 
@@ -41,12 +41,12 @@ public class Graph {
 		for(int j=0;j<adjList.length;j++) {
 			String nom = keys[j];
 			String idA = mapaNombres.get(nom);
-			List<Publicacion> lPublicacionesAutor = mp.obtenerPublicacionesAutor(idA);
+			List<Publicacion> lPublicacionesAutor = mapaP.obtenerPublicacionesAutor(idA);
 			for(Publicacion p: lPublicacionesAutor) {
 				if(p!=null) {
-					List<Publicacion> lPublicacionesCitadas = mp.obtenerListaPublicacionesCitadas(p.getIdentificador());
+					List<Publicacion> lPublicacionesCitadas = mapaP.obtenerListaPublicacionesCitadas(p.getIdentificador());
 					for(Publicacion pc: lPublicacionesCitadas) {
-						OrderedDoubleLinkedList<String> autoresP = mp.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
+						OrderedDoubleLinkedList<String> autoresP = mapaP.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
 						while(!autoresP.isEmpty()) {
 							String sIdAutor = autoresP.removeFirst();
 							Autor a = lista.obtenerAutor(sIdAutor);
