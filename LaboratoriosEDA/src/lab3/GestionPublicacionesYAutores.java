@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import lab1.Autor;
+import lab1.MapaAutores;
+import lab1.MapaPublicaciones;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,32 +16,29 @@ public class GestionPublicacionesYAutores {
 	private MapaPublicaciones mapaP;
 	private MapaAutores mapaA;
 	
-	public GestionPublicacionesYAutores() { //O(n)
+	public GestionPublicacionesYAutores() { //O(n)-> Coste lineal
 		mapaP = new MapaPublicaciones(); //O(1)
 		mapaA = new MapaAutores(); //O(1)
-		mapaP.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt"); //O(n)
-		System.out.println("Cargados los autores por publicación");
-		mapaP.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt"); //O(n)
-		System.out.println("Cargadas las publicaciones citadas");
-		mapaP.cargarPublicacionesDeFichero("Datuak/Datuak/publications-titles-all.txt"); //O(n)
-		System.out.println("Cargadas las publicaciones");
-		mapaA.cargarFicheroAutores("Datuak/Datuak/authors-name-all.txt"); //O(n)
-		System.out.println("Cargados los autores");
 	}
 	
-	public List<Autor> obtenerAutoresDeLaPublicacion(String idP){ //O(n)
-	
-		OrderedDoubleLinkedList<String> la = mapaP.obtenerAutoresDeLaPublicacion(idP); //O(1)
-		List<Autor> lAutores = new ArrayList<>(); //O(1)
-		
-		Iterator<String> it = la.iterator();
-		while(it.hasNext()) {
-			String idA = it.next();
+	public List<Autor> obtenerAutoresDeLaPublicacion(String idP){ //O(n)-> Coste lineal
+		List<String> la = mapaP.obtenerAutoresPublicacion(idP); //O(1)
+		List<Autor> lAut = new ArrayList<>(); //O(1)
+		for(String idA: la) { //n x O(1) -> O(n) donde n es el nï¿½mero de elementos de la
 			Autor a = mapaA.obtenerAutor(idA); //O(1)
-			lAutores.add(a); //O(1)
+			lAut.add(a); //O(1)
 		}
-		return lAutores;
-	}
+		return lAut;
+    } 
+	
+	
+	
+	public void cargarDatos() {
+        mapaA.cargarFicheroAutores("datos/lab1_datos/authors-name-all.txt");
+        mapaP.cargarPublicacionesDeFichero("datos/publications-titles-all.txt");
+        mapaP.cargarFicheroAutoresPorPublicacion("datos/publications-authors-all-final.txt");
+        mapaP.cargarFicheroPublicacionesCitadas("datos/publications-citedPubs-reducido.txt");
+    }
 	
 	public static void main(String[] args) {
 		GestionPublicacionesYAutores gp = new GestionPublicacionesYAutores();
@@ -47,4 +48,13 @@ public class GestionPublicacionesYAutores {
 		else
 			System.out.println(l);
 	}
+	
+	public MapaPublicaciones getMapaPublicaciones() {
+	    return mapaP;
+	}
+
+	public MapaAutores getMapaAutores() {
+	    return mapaA;
+	}
+	
 }

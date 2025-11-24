@@ -13,43 +13,61 @@ public class Graph {
 	HashMap<String, String> mapaNombres;
 
 	public void crearGrafo(MapaAutores lista, MapaPublicaciones mapaP) {
-		int i=0;
-		th = new HashMap<String,Integer>();
-		mapaNombres = new HashMap<String,String>();
-		for(Autor a: lista.getMapaAutores().values()) {
-			if(!th.containsKey(a.getNombre())) {
-				th.put(a.getNombre(), i);
-				i++;
-				mapaNombres.put(a.getNombre(), a.getIdentificador());
-				
-			}		
-		}
-		keys = new String[th.size()];
-		for (String k : th.keySet()) {
-			keys[th.get(k)] = k;
-		}
-		adjList = new ArrayList[th.keySet().size()];
-		for(int j=0;j<adjList.length;j++) {
-			String nom = keys[j];
-			String idA = mapaNombres.get(nom);
-			List<Publicacion> lPublicacionesAutor = mapaP.obtenerPublicacionesAutor(idA);
-			for(Publicacion p: lPublicacionesAutor) {
-				if(p!=null) {
-					List<Publicacion> lPublicacionesCitadas = mapaP.obtenerListaPublicacionesCitadas(p.getIdentificador());
-					for(Publicacion pc: lPublicacionesCitadas) {
-						OrderedDoubleLinkedList<String> autoresP = mapaP.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
-						while(!autoresP.isEmpty()) {
-							String sIdAutor = autoresP.removeFirst();
-							Autor a = lista.obtenerAutor(sIdAutor);
-							int pos = th.get(a.getNombre());
-							adjList[j].add(pos);
-						}
-					}
-				}
-			}
-		}
-	}
+	    int i = 0;
+	    th = new HashMap<String, Integer>();
+	    mapaNombres = new HashMap<String, String>();
+	    for (Autor a : lista.getMapaAutores().values()) {
+	        if (!th.containsKey(a.getNombre())) {
+	            th.put(a.getNombre(), i);
+	            i++;
+	            mapaNombres.put(a.getNombre(), a.getIdentificador());
+	        }
+	    }
+	    keys = new String[th.size()];
+	    for (String k : th.keySet()) {
+	        keys[th.get(k)] = k;
+	    }
+	    adjList = new ArrayList[th.keySet().size()];
+	    
+	    //ver cuanto tiempo tarda por cada 1000 autores
+	    for (int j = 0; j < adjList.length; j++) {
+	        adjList[j] = new ArrayList<Integer>(); 
+	        if (j % 1000 == 0) {
+	            System.out.println("Procesando autor " + j + " de " + adjList.length + "...");
+	        }
+	        
+	        String nom = keys[j];
+	        String idA = mapaNombres.get(nom);
+	        
+	        List<Publicacion> lPublicacionesAutor = mapaP.obtenerPublicacionesAutor(idA);
 
+	        if (lPublicacionesAutor != null) {
+	            for (Publicacion p : lPublicacionesAutor) {
+	                if (p != null) {
+	                    List<Publicacion> lPublicacionesCitadas = mapaP.obtenerListaPublicacionesCitadas(p.getIdentificador());
+	                    if (lPublicacionesCitadas != null) {
+	                        for (Publicacion pc : lPublicacionesCitadas) {
+
+	                            if (pc != null) {
+	                                OrderedDoubleLinkedList<String> autoresP = mapaP.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
+	                                if (autoresP != null) {
+	                                    while (!autoresP.isEmpty()) {
+	                                        String sIdAutor = autoresP.removeFirst();
+	                                        Autor a = lista.obtenerAutor(sIdAutor);
+	                                        if (a != null && th.containsKey(a.getNombre())) {
+	                                            int pos = th.get(a.getNombre());
+	                                            adjList[j].add(pos);
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
 	public void print() {
 		for (int i = 0; i < adjList.length; i++) {
 			System.out.print("Element: " + i + " " + keys[i] + " --> ");
@@ -61,6 +79,9 @@ public class Graph {
 	}
 
 	public boolean estanConectadosBIS(String a1, String a2) {
+		if (!th.containsKey(a1) || !th.containsKey(a2)) {
+	        return false;
+	    }
 		Queue<Integer> porExaminar = new LinkedList<Integer>();
 		long horaInicio = System.currentTimeMillis();
 		int pos1 = th.get(a1);
@@ -89,7 +110,9 @@ public class Graph {
 	}
 	
 	public ArrayList<String> estanConectadosAL(String a1, String a2) {
-
+		if (!th.containsKey(a1) || !th.containsKey(a2)) {
+	        return new ArrayList<String>();
+	    }
 
 		HashMap<String, String> mapa = new HashMap<>();
 		mapa.put(a1, a1);
