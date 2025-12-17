@@ -44,35 +44,7 @@ public class GestionPublicacionesYAutores {
 		return lAutores;
 	}
 	
-//	public HashMap<String, Double> randomWalkPageRank(){
-//		HashMap<String, Double> mapa = new HashMap<>();
-//		
-//		for(String idA: ma.getMapaAutores().keySet()) {
-//			Queue<String> porExaminar = new LinkedList<>();
-//			List<String> examinados = new ArrayList<>();
-//			porExaminar.add(idA);
-//			examinados.add(idA);
-//			boolean fin = false;
-//			while(!fin && !porExaminar.isEmpty()) {
-//				String idautor = porExaminar.remove();
-//				List<Publicacion> lp = mp.obtenerPublicacionesAutor(idautor);
-//				int i=0;
-//				while(!fin && i<lp.size()) {
-//					Publicacion p = lp.get(i);
-//					List<Publicacion> lpc = mp.obtenerListaPublicacionesCitadas(p.getIdentificador());
-//					if(lpc.isEmpty()){
-//						fin = true;
-//					}else {
-//						for(Publicacion publi: lpc) {
-//							//Obtenemos la lista de autores de la publicación citada
-//							List<String> lista = mp.obtenerAutoresDeLaPublicacion(publi) 
-//						}
-//					}
-//				}
-//			}
-//		}
-//		return mapa;
-//	}
+
 	
 	public static void main(String[] args) {
 		GestionPublicacionesYAutores gp = new GestionPublicacionesYAutores();
