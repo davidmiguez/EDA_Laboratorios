@@ -10,14 +10,10 @@ public class ProgramaPrincipal {
 		la.cargarFicheroAutores("Datuak/Datuak/authors-name-all.txt");
 		long milisFin = System.currentTimeMillis();
 		
-		MapaPublicaciones mp = new MapaPublicaciones();
-		mp.cargarPublicacionesDeFichero("Datuak/Datuak/publicaciones.txt");
-		mp.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt");
-		mp.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt");
-		//List<Publicacion> po = mp.obtenerPublicacionesOrdenadas();
-		//System.out.println("Publicaciones ordenadas");
-		//System.out.println(po.get(0).getIdentificador());
-		//System.out.println(po.get(po.size()-1).getIdentificador());
+		MapaPublicaciones mapaP = new MapaPublicaciones();
+		mapaP.cargarPublicacionesDeFichero("Datuak/Datuak/publicaciones.txt");
+		mapaP.cargarFicheroAutoresPorPublicacion("Datuak/Datuak/publications-authors-all-final.txt");
+		mapaP.cargarFicheroPublicacionesCitadas("Datuak/Datuak/publications-citedPubs-all.txt");
 		System.out.println("Tiempo de ejecución: "+(milisFin-milisInicio)+" milisegundos");
 		
 		

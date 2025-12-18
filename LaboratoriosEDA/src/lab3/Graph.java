@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import lab4.MapaAutores;
+import lab4.Publicacion;
+
 public class Graph {
 
 	HashMap<String, Integer> th;
@@ -12,11 +15,11 @@ public class Graph {
 	ArrayList<Integer>[] adjList;
 	HashMap<String, String> mapaNombres;
 
-	public void crearGrafo(MapaAutores lista, MapaPublicaciones mapaP) {
+	public void crearGrafo(MapaAutores mapaA, lab4.MapaPublicaciones mapaP) {
 	    int i = 0;
 	    th = new HashMap<String, Integer>();
 	    mapaNombres = new HashMap<String, String>();
-	    for (Autor a : lista.getMapaAutores().values()) {
+	    for (lab4.Autor a : mapaA.getMapaAutores().values()) {
 	        if (!th.containsKey(a.getNombre())) {
 	            th.put(a.getNombre(), i);
 	            i++;
@@ -49,11 +52,11 @@ public class Graph {
 	                        for (Publicacion pc : lPublicacionesCitadas) {
 
 	                            if (pc != null) {
-	                                OrderedDoubleLinkedList<String> autoresP = mapaP.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
+	                                lab4.OrderedDoubleLinkedList<String> autoresP = mapaP.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
 	                                if (autoresP != null) {
 	                                    while (!autoresP.isEmpty()) {
 	                                        String sIdAutor = autoresP.removeFirst();
-	                                        Autor a = lista.obtenerAutor(sIdAutor);
+	                                        lab4.Autor a = mapaA.obtenerAutor(sIdAutor);
 	                                        if (a != null && th.containsKey(a.getNombre())) {
 	                                            int pos = th.get(a.getNombre());
 	                                            adjList[j].add(pos);

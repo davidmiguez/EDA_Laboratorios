@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
+import lab3.Autor;
+import lab3.MapaAutores;
+import lab3.MapaPublicaciones;
+import lab3.OrderedDoubleLinkedList;
+import lab3.Publicacion;
+
+
 public class Graph {
 
 	HashMap<String, Integer> th;
@@ -14,50 +21,61 @@ public class Graph {
 	//       nombreA, idA
 	HashMap<String, String> mapaNombres;
 
-	public void crearGrafo(MapaAutores lista, MapaPublicaciones mp) {
-		// Post: crea el grafo desde la lista de autores
-		// Los nodos son nombres de autores
+	public void crearGrafo(MapaAutores lista, MapaPublicaciones mapaP) {
+	    int i = 0;
+	    th = new HashMap<String, Integer>();
+	    mapaNombres = new HashMap<String, String>();
+	    for (Autor a : lista.getMapaAutores().values()) {
+	        if (!th.containsKey(a.getNombre())) {
+	            th.put(a.getNombre(), i);
+	            i++;
+	            mapaNombres.put(a.getNombre(), a.getIdentificador());
+	        }
+	    }
+	    keys = new String[th.size()];
+	    for (String k : th.keySet()) {
+	        keys[th.get(k)] = k;
+	    }
+	    adjList = new ArrayList[th.keySet().size()];
+	    
+	    //ver cuanto tiempo tarda por cada 1000 autores
+	    for (int j = 0; j < adjList.length; j++) {
+	        adjList[j] = new ArrayList<Integer>(); 
+	        if (j % 1000 == 0) {
+	            System.out.println("Procesando autor " + j + " de " + adjList.length + "...");
+	        }
+	        
+	        String nom = keys[j];
+	        String idA = mapaNombres.get(nom);
+	        
+	        List<Publicacion> lPublicacionesAutor = mapaP.obtenerPublicacionesAutor(idA);
 
-		// Paso 1: llenar th
-		// COMPLETAR C�DIGO
-		int i=0;
-		th = new HashMap<String,Integer>();
-		mapaNombres = new HashMap<String,String>();
-		for(Autor a: lista.getMapaAutores().values()) {
-			if(!th.containsKey(a.getNombre())) {
-				th.put(a.getNombre(), i);
-				i++;
-				mapaNombres.put(a.getNombre(), a.getIdentificador());
-				
-			}		
-		}
-		// Paso 2: llenar keys�
-		keys = new String[th.size()];
-		for (String k : th.keySet()) {
-			keys[th.get(k)] = k;
-		}
-		// Paso 3: llenar adjList�
-		// COMPLETAR C�DIGO
-		adjList = new ArrayList[th.keySet().size()];
-		for(int j=0;j<adjList.length;j++) {
-			String nom = keys[j];
-			String idA = mapaNombres.get(nom);
-			List<Publicacion> lPublicacionesAutor = mp.obtenerPublicacionesAutor(idA);
-			for(Publicacion p: lPublicacionesAutor) {
-				if(p!=null) {
-					List<Publicacion> lPublicacionesCitadas = mp.obtenerListaPublicacionesCitadas(p.getIdentificador());
-					for(Publicacion pc: lPublicacionesCitadas) {
-						OrderedDoubleLinkedList<String> autoresP = mp.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
-						while(!autoresP.isEmpty()) {
-							String sIdAutor = autoresP.removeFirst();
-							Autor a = lista.obtenerAutor(sIdAutor);
-							int pos = th.get(a.getNombre());
-							adjList[j].add(pos);
-						}
-					}
-				}
-			}
-		}
+	        if (lPublicacionesAutor != null) {
+	            for (Publicacion p : lPublicacionesAutor) {
+	                if (p != null) {
+	                    List<Publicacion> lPublicacionesCitadas = mapaP.obtenerListaPublicacionesCitadas(p.getIdentificador());
+	                    if (lPublicacionesCitadas != null) {
+	                        for (Publicacion pc : lPublicacionesCitadas) {
+
+	                            if (pc != null) {
+	                                OrderedDoubleLinkedList<String> autoresP = mapaP.obtenerAutoresDeLaPublicacion(pc.getIdentificador());
+	                                if (autoresP != null) {
+	                                    while (!autoresP.isEmpty()) {
+	                                        String sIdAutor = autoresP.removeFirst();
+	                                        Autor a = lista.obtenerAutor(sIdAutor);
+	                                        if (a != null && th.containsKey(a.getNombre())) {
+	                                            int pos = th.get(a.getNombre());
+	                                            adjList[j].add(pos);
+	                                        }
+	                                    }
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
 	}
 
 	public void print() {
@@ -161,65 +179,7 @@ public class Graph {
 	
 	
 	
-	
-//	public HashMap<String, Double> calcularPageRank() {
-//		boolean trace = false; // tracing the pagerank algorithm
-//		boolean damping = true; // tracing the pagerank algorithm
-//			
-//	       // COMPLETAR CÓDIGO
-//		HashMap<String, Double> m = new HashMap<>();
-//		int n = enlaces.size();
-//		
-//		double umbral = 0.0001;
-//		double d = 0.85;
-//		/*double suma1 = 0;
-//		for(String w : enlaces.keySet()) {
-//			m.put(w, (double)1/n);
-//			suma1 = suma1 + (double)1/n;
-//		}*/
-//		for(String w : enlaces.keySet()) {
-//			m.put(w, (double)1/n);
-//		}
-//		double suma1 = 1;
-//		boolean fin = false;
-//		while(!fin) {
-//			double suma2 = 0;
-//			for(String w: m.keySet()) {
-//				//Recorro los enlaces de w
-//				double resul = 0;
-//				for(String e: enlaces.get(w)) {
-//					resul = resul + m.get(e)/enlaces.get(e).size();
-//					
-//				}
-//				resul = (1-d)/n+d*resul;
-//				suma2 = suma2 + resul;
-//				m.put(w, resul);
-//			}
-//			
-//			if(suma1-suma2<umbral) {
-//				fin = true;
-//			}else {
-//				suma1 = suma2;
-//			}
-//		}
-//		return m;
-//
-//       }
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public boolean estanConectadosBIS(String a1, String a2) {
 		Queue<Integer> porExaminar = new LinkedList<Integer>();
@@ -249,32 +209,7 @@ public class Graph {
 		return enc;
 
 	}
-	/*public boolean estanConectados(String a1, String a2) {
-		Queue<Integer> porExaminar = new LinkedList<Integer>();
-
-		int pos1 = th.get(a1);
-		int pos2 = th.get(a2);
-		boolean enc = false;
-		boolean[] examinados = new boolean[th.size()];
-		// COMPLETAR C�DIGO
-		porExaminar.add(pos1);
-		while(!enc && !porExaminar.isEmpty()) {
-			int pos = porExaminar.remove();
-			if(pos == pos2) {
-				enc = true;
-			}else {
-				if(!examinados[pos]) {
-					examinados[pos] = true;
-					for(int p: adjList[pos]) {
-						porExaminar.add(p);
-					}
-				}
-			}
-		}
-		return enc;
-
-	}*/
-
+	
 	public ArrayList<String> estanConectadosAL(String a1, String a2) {
 
 		// COMPLETAR C�DIGO
